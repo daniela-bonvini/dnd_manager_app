@@ -33,10 +33,32 @@
   }
 }
 
-.card {
-  padding: 2em;
+.dnd-frame {
+  position: relative;
+  padding: 2rem;
+  border: 4px solid #2d2d2d;
+  background: #f4f1ea; /* parchment tone */
+  font-family: "Uncial Antiqua", serif;
 }
 
-.read-the-docs {
-  color: #888;
+.dnd-frame::before,
+.dnd-frame::after {
+  animation: logo-spin infinite 20s linear;
+  content: "";
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  background-image: url("./assets/d20.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.dnd-frame::before {
+  top: -24px;
+  left: -24px;
+}
+
+.dnd-frame::after {
+  bottom: -24px;
+  right: -24px;
 }

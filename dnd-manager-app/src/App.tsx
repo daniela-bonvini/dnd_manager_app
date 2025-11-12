@@ -3,7 +3,11 @@ import "./App.css";
 function App() {
   return (
     <>
-      <div>Hello D&D World!</div>
+      <div className="dnd-frame">
+        <div className="content">
+          <div>Hello D&D World!</div>
+        </div>
+      </div>
     </>
   );
 }
