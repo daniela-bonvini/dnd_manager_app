@@ -38,3 +38,14 @@
   bottom: -24px;
   right: -24px;
 }
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+.content > :first-child,
+.content > :nth-child(2) {
+  grid-column: 1 / -1;
+}

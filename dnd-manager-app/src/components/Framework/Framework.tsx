@@ -1,6 +1,7 @@
 import "./Framework.css";
 import React from "react";
 import AdventurerStats from "../AdventurerStats/AdventurerStats";
+import Inventory from "../Inventory/Inventory";
 
 // defined outside of function or we create a new context on each re-render
 export const StatsContext = React.createContext<
@@ -18,6 +19,8 @@ function Framework() {
           <div className="content">
             <h1>D&D Manager</h1>
             <AdventurerStats></AdventurerStats>
+            <Inventory></Inventory>
+            <div>spellbook</div>
           </div>
         </div>
       </StatsContext.Provider>
