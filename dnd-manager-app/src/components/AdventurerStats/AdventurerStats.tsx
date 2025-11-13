@@ -1,6 +1,7 @@
 import React from "react";
 import "./AdventurerStats.css";
 import { StatsContext } from "../Framework/Framework";
+import { CircleDollarSign, ArrowBigUpDash } from "lucide-react";
 
 function AdventurerStats() {
   const context = React.useContext(StatsContext);
@@ -14,10 +15,12 @@ function AdventurerStats() {
     <>
       <div className="adventurer-stats">
         <div className="adventurer-stats__item">
+          <ArrowBigUpDash size={16} />
           <label>LEVEL: </label>
           <span>{level}</span>
         </div>
         <div className="adventurer-stats__item">
+          <CircleDollarSign size={16} />
           <label>MONEY: </label>
           <span>{money}</span>
         </div>
