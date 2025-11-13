@@ -1,3 +1,7 @@
+:root {
+  --topDistance: 21px;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -8,7 +12,6 @@
 }
 
 .dnd-frame {
-  height: 100%;
   position: relative;
   padding: 2rem;
   border: 4px solid #2d2d2d;
@@ -30,13 +33,13 @@
 }
 
 .dnd-frame::before {
-  top: -24px;
-  left: -24px;
+  top: calc(var(--topDistance) * -1);
+  left: calc(var(--topDistance) * -1);
 }
 
 .dnd-frame::after {
-  bottom: -24px;
-  right: -24px;
+  bottom: calc(var(--topDistance) * -1);
+  right: calc(var(--topDistance) * -1);
 }
 
 .content {
