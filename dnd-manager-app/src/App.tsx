@@ -1,15 +1,8 @@
 import "./App.css";
+import Framework from "./components/Framework/Framework";
 
 function App() {
-  return (
-    <>
-      <div className="dnd-frame">
-        <div className="content">
-          <div>Hello D&D World!</div>
-        </div>
-      </div>
-    </>
-  );
+  return <Framework></Framework>;
 }
 
 export default App;
