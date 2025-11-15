@@ -4,6 +4,7 @@ import { getAllEquipment } from "../../services/dndApiService";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import Modal from "../Modal/Modal";
 import "./AddButton.css";
+import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 
 function AddButton({ buttonLabel, money }: { buttonLabel?: string; money: number }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -44,14 +45,7 @@ function AddButton({ buttonLabel, money }: { buttonLabel?: string; money: number
               Loading...
             </span>
           ) : (
-            <div className="equipment-grid">
-              {equipmentList.map((item) => (
-                <div key={item.index} className="equipment-card">
-                  <h4>{item.name}</h4>
-                  <p>{item.cost} gold</p>
-                </div>
-              ))}
-            </div>
+            <EquipmentGrid equipmentList={equipmentList} />
           )}
         </Modal>
       )}
