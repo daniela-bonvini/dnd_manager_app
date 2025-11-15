@@ -4,6 +4,7 @@ import { useEquipmentContext } from "../../contexts/EquipmentContext";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import Modal from "../Modal/Modal";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
+import Tooltip from "../Tooltip/Tooltip";
 
 function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const equipmentContext = useEquipmentContext();
@@ -26,10 +27,12 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
 
   return (
     <>
-      <button onClick={() => handleOpenModal()} type="button" disabled={equipmentInInventory.length === 0}>
-        <HandCoins />
-        {buttonLabel}
-      </button>
+      <Tooltip text="You don't have any items to sell. Try buying some." show={equipmentInInventory.length === 0}>
+        <button onClick={() => handleOpenModal()} type="button" disabled={equipmentInInventory.length === 0}>
+          <HandCoins />
+          {buttonLabel}
+        </button>
+      </Tooltip>
 
       {isModalOpen && (
         <Modal handleDismiss={handleCloseModal}>

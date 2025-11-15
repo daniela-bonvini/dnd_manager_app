@@ -1,4 +1,4 @@
-import { CircleDollarSign, Frown } from "lucide-react";
+import { CircleDollarSign } from "lucide-react";
 import React from "react";
 import { getAllEquipment } from "../../services/dndApiService";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
@@ -8,6 +8,7 @@ import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 import { useStatsContext } from "../../contexts/StatsContext";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
 import Spinner from "../Spinner/Spinner";
+import Tooltip from "../Tooltip/Tooltip";
 
 function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -15,14 +16,16 @@ function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const statsContext = useStatsContext();
+  const { money } = statsContext;
   const equipmentContext = useEquipmentContext();
+  const { buyEquipment } = equipmentContext;
 
   async function handleAddButtonClick() {
     setIsModalOpen(true);
     setIsLoading(true);
     try {
       const allEquipment = await getAllEquipment();
-      const affordableEquipment = allEquipment.filter((item: ExtentedEquipment) => item.cost <= statsContext.money);
+      const affordableEquipment = allEquipment.filter((item: ExtentedEquipment) => item.cost <= money);
       setEquipmentList(affordableEquipment);
     } catch (error) {
       console.error("Error fetching equipment:", error);
@@ -37,25 +40,17 @@ function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
 
   return (
     <>
-      {statsContext.money === 0 ? (
-        <p>
-          <span>
-            You have no more money. <Frown />
-          </span>
-          <br />
-          <span>Try selling some items.</span>
-        </p>
-      ) : (
-        <button onClick={handleAddButtonClick} type="button">
+      <Tooltip text="You don't have enough money. Try selling some items." show={money === 0}>
+        <button onClick={handleAddButtonClick} type="button" disabled={money === 0}>
           <CircleDollarSign />
           {buttonLabel}
         </button>
-      )}
+      </Tooltip>
 
       {isModalOpen && (
         <Modal handleDismiss={handleCloseModal}>
-          <h3>Available Equipment under {statsContext.money} gold</h3>
-          {isLoading ? <Spinner /> : <EquipmentGrid equipmentList={equipmentList} handleButtonClick={equipmentContext.buyEquipment} />}
+          <h3>Available Equipment under {money} gold</h3>
+          {isLoading ? <Spinner /> : <EquipmentGrid equipmentList={equipmentList} handleButtonClick={buyEquipment} />}
         </Modal>
       )}
     </>
