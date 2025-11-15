@@ -1,3 +1,5 @@
+import type { Equipment, ExtentedEquipment } from "../models/EquipmentModel";
+
 const BASE_URL = "https://www.dnd5eapi.co/api/2014";
 
 //do models for return types
@@ -5,7 +7,13 @@ const BASE_URL = "https://www.dnd5eapi.co/api/2014";
 export async function getAllEquipment() {
   const response = await fetch(`${BASE_URL}/equipment`);
   const data = await response.json();
-  return data;
+  const extendedEquipmentList: ExtentedEquipment[] = data.results.map((item: Equipment) => ({
+    index: item.index,
+    name: item.name,
+    url: item.url,
+    cost: Math.floor(Math.random() * 500) + 1, // Mock cost data
+  }));
+  return extendedEquipmentList;
 }
 
 export async function getEquipment(index: string) {

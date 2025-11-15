@@ -5,10 +5,12 @@ import { StatsContext } from "../Framework/Framework";
 import SearchBar from "../SearchBar";
 import { PackageOpenIcon } from "lucide-react";
 import { startingEquipmentIndexList } from "../../data/data";
+import AddButton from "../AddButton";
+import type { ExtentedEquipment } from "../../models/EquipmentModel";
 
 function Inventory() {
-  const [equipment, setEquipment] = React.useState<any[]>([]);
-  const [filteredEquipment, setFilteredEquipment] = React.useState<any[]>([]);
+  const [equipment, setEquipment] = React.useState<ExtentedEquipment[]>([]);
+  const [filteredEquipment, setFilteredEquipment] = React.useState<ExtentedEquipment[]>([]);
   const hasFetchedStartingEquipment = React.useRef(false);
 
   React.useEffect(() => {
@@ -41,7 +43,6 @@ function Inventory() {
           <h2>Inventory</h2>
         </div>
         <div>
-          <SearchBar listToSearch={equipment} setFilteredList={setFilteredEquipment} resetFilteredList={resetFilteredEquipment}></SearchBar>
           {/* skeleton? */}
           {filteredEquipment.length === 0 ? (
             <p>No results found</p>
@@ -53,6 +54,13 @@ function Inventory() {
             </ul>
           )}
         </div>
+        <SearchBar
+          placeholder={"Search equipment..."}
+          listToSearch={equipment}
+          setFilteredList={setFilteredEquipment}
+          resetFilteredList={resetFilteredEquipment}
+        ></SearchBar>
+        <AddButton buttonLabel={"Add Equipment"} money={context.money} />
       </div>
     </>
   );

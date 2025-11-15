@@ -1,15 +1,15 @@
 import { Delete, Search } from "lucide-react";
 import React from "react";
 
-function SearchBar({
+function SearchBar<T extends { name: string }>({
   placeholder,
   listToSearch,
   setFilteredList,
   resetFilteredList,
 }: {
   placeholder: string;
-  listToSearch: any[];
-  setFilteredList: React.Dispatch<React.SetStateAction<any[]>>;
+  listToSearch: T[];
+  setFilteredList: React.Dispatch<React.SetStateAction<T[]>>;
   resetFilteredList: () => void;
 }) {
   const [query, setQuery] = React.useState<string>("");
