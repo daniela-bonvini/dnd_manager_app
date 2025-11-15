@@ -1,13 +1,13 @@
 import React from "react";
 import "./Inventory.css";
 import * as dndApiService from "../../services/dndApiService";
-import { StatsContext } from "../Framework/Framework";
 import SearchBar from "../SearchBar";
 import { PackageOpenIcon } from "lucide-react";
 import { startingEquipmentIndexList } from "../../data/data";
 import AddButton from "../AddButton/AddButton";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
-import { InventoryContext } from "./InventoryContext";
+import { EquipmentContext } from "../../contexts/EquipmentContext";
+import { useStatsContext } from "../../contexts/StatsContext";
 
 //think about moving here  money management too and removing spells and equipment management from framework
 function Inventory() {
@@ -15,10 +15,7 @@ function Inventory() {
   const [filteredEquipment, setFilteredEquipment] = React.useState<ExtentedEquipment[]>([]);
   const hasFetchedStartingEquipment = React.useRef(false);
 
-  const context = React.useContext(StatsContext);
-  if (!context) {
-    throw new Error("AdventurerStats must be used within StatsContext.Provider");
-  }
+  const statsContext = useStatsContext();
 
   React.useEffect(() => {
     if (hasFetchedStartingEquipment.current) return;
@@ -37,14 +34,14 @@ function Inventory() {
     setFilteredEquipment(equipment);
   }
 
-  function handleSelectEquipment(item: ExtentedEquipment) {
+  function addEquipment(item: ExtentedEquipment) {
     setEquipment([...equipment, item]);
-    context.money -= item.cost;
+    statsContext.setMoney(statsContext.money - item.cost);
   }
 
   return (
     <>
-      <InventoryContext.Provider value={{ addEquipment: handleSelectEquipment }}>
+      <EquipmentContext.Provider value={{ addEquipment: addEquipment }}>
         <div>
           <div>
             <PackageOpenIcon />
@@ -68,9 +65,9 @@ function Inventory() {
             setFilteredList={setFilteredEquipment}
             resetFilteredList={resetFilteredEquipment}
           ></SearchBar>
-          <AddButton buttonLabel={"Add Equipment"} money={context.money} />
+          <AddButton buttonLabel={"Add Equipment"} />
         </div>
-      </InventoryContext.Provider>
+      </EquipmentContext.Provider>
     </>
   );
 }

@@ -5,18 +5,22 @@ import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import Modal from "../Modal/Modal";
 import "./AddButton.css";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
+import { useStatsContext } from "../../contexts/StatsContext";
 
-function AddButton({ buttonLabel, money }: { buttonLabel?: string; money: number }) {
+function AddButton({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [equipmentList, setEquipmentList] = React.useState<ExtentedEquipment[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  //check that context exists
+  const statsContext = useStatsContext();
 
   async function handleAddButtonClick() {
     setIsModalOpen(true);
     setIsLoading(true);
     try {
       const allEquipment = await getAllEquipment();
-      const affordableEquipment = allEquipment.filter((item: ExtentedEquipment) => item.cost <= money);
+      const affordableEquipment = allEquipment.filter((item: ExtentedEquipment) => item.cost <= statsContext.money);
       setEquipmentList(affordableEquipment);
     } catch (error) {
       console.error("Error fetching equipment:", error);
@@ -38,7 +42,7 @@ function AddButton({ buttonLabel, money }: { buttonLabel?: string; money: number
 
       {isModalOpen && (
         <Modal handleDismiss={handleCloseModal}>
-          <h3>Available Equipment under {money} gold</h3>
+          <h3>Available Equipment under {statsContext.money} gold</h3>
           {isLoading ? (
             <span className="loading-indicator">
               <Loader className="spinner" />

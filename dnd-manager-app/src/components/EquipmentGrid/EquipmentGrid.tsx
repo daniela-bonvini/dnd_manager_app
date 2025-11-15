@@ -1,9 +1,9 @@
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
-import { useInventory } from "../Inventory/InventoryContext";
+import { useEquipmentContext } from "../../contexts/EquipmentContext";
 import "./EquipmentGrid.css";
 
 function EquipmentGrid({ equipmentList, handleDismiss }: { equipmentList: ExtentedEquipment[]; handleDismiss: () => void }) {
-  const { addEquipment } = useInventory();
+  const { addEquipment } = useEquipmentContext();
   function handleItemClick(item: ExtentedEquipment) {
     handleDismiss();
     addEquipment(item);

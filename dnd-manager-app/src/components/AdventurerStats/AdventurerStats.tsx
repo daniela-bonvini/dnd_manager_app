@@ -1,16 +1,11 @@
-import React from "react";
 import "./AdventurerStats.css";
-import { StatsContext } from "../Framework/Framework";
 import { CircleDollarSign, ArrowBigUpDash } from "lucide-react";
+import { useStatsContext } from "../../contexts/StatsContext";
 
 function AdventurerStats() {
-  const context = React.useContext(StatsContext);
+  const statsContext = useStatsContext();
 
-  if (!context) {
-    throw new Error("AdventurerStats must be used within StatsContext.Provider");
-  }
-
-  const { level, setLevel, money, setMoney } = context;
+  const { level, money } = statsContext;
   return (
     <>
       <div className="adventurer-stats">
