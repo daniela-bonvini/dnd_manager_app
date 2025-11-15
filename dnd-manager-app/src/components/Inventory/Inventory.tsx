@@ -5,7 +5,7 @@ import { StatsContext } from "../Framework/Framework";
 import SearchBar from "../SearchBar";
 import { PackageOpenIcon } from "lucide-react";
 import { startingEquipmentIndexList } from "../../data/data";
-import AddButton from "../AddButton";
+import AddButton from "../AddButton/AddButton";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 
 function Inventory() {
