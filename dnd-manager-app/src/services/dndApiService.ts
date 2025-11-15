@@ -19,7 +19,13 @@ export async function getAllEquipment() {
 export async function getEquipment(index: string) {
   const response = await fetch(`${BASE_URL}/equipment/${index}`);
   const data = await response.json();
-  return data;
+  const mappedData: ExtentedEquipment = {
+    index: data.index,
+    name: data.name,
+    url: data.url,
+    cost: data.cost ? data.cost.quantity : Math.floor(Math.random() * 500) + 1, // Use actual cost if available, else mock
+  };
+  return mappedData;
 }
 
 export async function getAllSpells() {

@@ -12,7 +12,6 @@ function AddButton({ buttonLabel }: { buttonLabel?: string }) {
   const [equipmentList, setEquipmentList] = React.useState<ExtentedEquipment[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  //check that context exists
   const statsContext = useStatsContext();
 
   async function handleAddButtonClick() {

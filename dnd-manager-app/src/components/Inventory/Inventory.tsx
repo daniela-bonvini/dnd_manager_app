@@ -23,6 +23,7 @@ function Inventory() {
 
     async function loadStartingEquipment() {
       const results = await Promise.all(startingEquipmentIndexList.map((index) => dndApiService.getEquipment(index)));
+      console.log("Loaded starting equipment:", results);
       setEquipment(results.filter(Boolean));
       setFilteredEquipment(results.filter(Boolean));
     }
@@ -54,7 +55,9 @@ function Inventory() {
             ) : (
               <ul>
                 {filteredEquipment.map((item) => (
-                  <li key={item.index}>{item.name}</li>
+                  <li key={item.index}>
+                    {item.name} : {item.cost} gold
+                  </li>
                 ))}
               </ul>
             )}
@@ -65,7 +68,7 @@ function Inventory() {
             setFilteredList={setFilteredEquipment}
             resetFilteredList={resetFilteredEquipment}
           ></SearchBar>
-          <AddButton buttonLabel={"Add Equipment"} />
+          <AddButton buttonLabel={"Buy Equipment"} />
         </div>
       </EquipmentContext.Provider>
     </>
