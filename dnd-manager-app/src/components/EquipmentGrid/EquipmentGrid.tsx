@@ -1,6 +1,15 @@
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import "./EquipmentGrid.css";
 
+function EquipmentGridCard({ item, handleButtonClick }: { item: ExtentedEquipment; handleButtonClick: (item: ExtentedEquipment) => void }) {
+  return (
+    <div className="equipment-card" onClick={() => handleButtonClick(item)}>
+      <h4>{item.name}</h4>
+      <p>{item.cost} gold</p>
+    </div>
+  );
+}
+
 function EquipmentGrid({
   equipmentList,
   handleButtonClick,
@@ -17,12 +26,7 @@ function EquipmentGrid({
       {equipmentList.length === 0 ? (
         <span>There are no items available for your budget</span>
       ) : (
-        equipmentList.map((item) => (
-          <div key={item.index} className="equipment-card" onClick={() => handleItemClick(item)}>
-            <h4>{item.name}</h4>
-            <p>{item.cost} gold</p>
-          </div>
-        ))
+        equipmentList.map((item) => <EquipmentGridCard key={item.index} item={item} handleButtonClick={handleItemClick} />)
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Inventory.css";
 import * as dndApiService from "../../services/dndApiService";
-import SearchBar from "../SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
 import { PackageOpenIcon } from "lucide-react";
 import { startingEquipmentIndexList } from "../../data/data";
 import BuyEquipment from "../BuyEquipment/BuyEquipment";
