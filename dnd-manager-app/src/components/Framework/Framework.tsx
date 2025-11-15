@@ -5,12 +5,12 @@ import Inventory from "../Inventory/Inventory";
 
 // defined outside of function or we create a new context on each re-render
 export const StatsContext = React.createContext<
-  { level: number; setLevel: Function; money: number; setMoney: Function } | undefined
+  { level: number; setLevel: (level: number) => void; money: number; setMoney: (money: number) => void } | undefined
 >(undefined);
 
 function Framework() {
   const [level, setLevel] = React.useState<number>(1);
-  const [money, setMoney] = React.useState<number>(100);
+  const [money, setMoney] = React.useState<number>(250);
 
   return (
     <>

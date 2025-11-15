@@ -45,7 +45,7 @@ function AddButton({ buttonLabel, money }: { buttonLabel?: string; money: number
               Loading...
             </span>
           ) : (
-            <EquipmentGrid equipmentList={equipmentList} />
+            <EquipmentGrid equipmentList={equipmentList} handleDismiss={handleCloseModal} />
           )}
         </Modal>
       )}
