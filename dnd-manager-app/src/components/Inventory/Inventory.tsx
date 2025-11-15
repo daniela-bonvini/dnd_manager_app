@@ -41,17 +41,17 @@ function Inventory() {
           <h2>Inventory</h2>
         </div>
         <div>
-          <SearchBar
-            listToSearch={filteredEquipment}
-            setEquipment={setFilteredEquipment}
-            resetFilteredEquipment={resetFilteredEquipment}
-          ></SearchBar>
+          <SearchBar listToSearch={equipment} setFilteredList={setFilteredEquipment} resetFilteredList={resetFilteredEquipment}></SearchBar>
           {/* skeleton? */}
-          <ul>
-            {filteredEquipment.map((item) => (
-              <li key={item.index}>{item.name}</li>
-            ))}
-          </ul>
+          {filteredEquipment.length === 0 ? (
+            <p>No results found</p>
+          ) : (
+            <ul>
+              {filteredEquipment.map((item) => (
+                <li key={item.index}>{item.name}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </>
