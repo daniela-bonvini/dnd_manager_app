@@ -8,6 +8,7 @@ import { startingEquipmentIndexList } from "../../data/data";
 
 function Inventory() {
   const [equipment, setEquipment] = React.useState<any[]>([]);
+  const [filteredEquipment, setFilteredEquipment] = React.useState<any[]>([]);
   const hasFetchedStartingEquipment = React.useRef(false);
 
   React.useEffect(() => {
@@ -17,10 +18,15 @@ function Inventory() {
     async function loadStartingEquipment() {
       const results = await Promise.all(startingEquipmentIndexList.map((index) => dndApiService.getEquipment(index)));
       setEquipment(results.filter(Boolean));
+      setFilteredEquipment(results.filter(Boolean));
     }
 
     loadStartingEquipment();
   }, []);
+
+  function resetFilteredEquipment() {
+    setFilteredEquipment(equipment);
+  }
 
   const context = React.useContext(StatsContext);
   if (!context) {
@@ -35,10 +41,14 @@ function Inventory() {
           <h2>Inventory</h2>
         </div>
         <div>
-          <SearchBar></SearchBar>
+          <SearchBar
+            listToSearch={filteredEquipment}
+            setEquipment={setFilteredEquipment}
+            resetFilteredEquipment={resetFilteredEquipment}
+          ></SearchBar>
           {/* skeleton? */}
           <ul>
-            {equipment.map((item) => (
+            {filteredEquipment.map((item) => (
               <li key={item.index}>{item.name}</li>
             ))}
           </ul>

@@ -1,36 +1,39 @@
 import { Delete, Search } from "lucide-react";
 import React from "react";
-import { getEquipment } from "../services/dndApiService";
 
-function SearchBar() {
+function SearchBar({
+  listToSearch,
+  setEquipment,
+  resetFilteredEquipment,
+}: {
+  listToSearch: any[];
+  setEquipment: React.Dispatch<React.SetStateAction<any[]>>;
+  resetFilteredEquipment: () => void;
+}) {
   const [query, setQuery] = React.useState<string>("");
 
-  function handleSearch(event: React.FormEvent) {
-    event.preventDefault();
-    const searchedElement = query.toLowerCase();
+  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    const searchedElement = event.target.value.toLowerCase();
+    setQuery(event.target.value);
+
     if (searchedElement) {
-      const foundResult = getEquipment(searchedElement);
-      console.log("searched for: " + foundResult);
+      const foundResults = listToSearch.filter((item) => item.name.toLowerCase().includes(searchedElement));
+      setEquipment(foundResults);
     } else {
-      //foundResult.innerHTML = "No result with searched name.";
+      setEquipment(listToSearch);
     }
   }
 
-  function handleDeleteQuery() {
+  function handleReset() {
     setQuery("");
+    resetFilteredEquipment();
   }
 
   return (
-    <form onSubmit={handleSearch}>
-      <input
-        id="search-input"
-        type="text"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
-        placeholder="Search"
-        minLength={1}
-      />
-      <button onClick={handleDeleteQuery} type="submit">
+    <form onSubmit={(e) => e.preventDefault()}>
+      <Search />
+      <input id="search-input" type="text" value={query} onChange={handleSearch} placeholder="Search" />
+      <button onClick={handleReset} type="button">
         <Delete />
       </button>
     </form>
