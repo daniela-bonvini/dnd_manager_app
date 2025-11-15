@@ -2,7 +2,9 @@ import React from "react";
 import type { ExtentedEquipment } from "../models/EquipmentModel";
 
 export const EquipmentContext = React.createContext<{
+  equipmentInInventory: ExtentedEquipment[];
   addEquipment: (item: ExtentedEquipment) => void;
+  removeEquipment: (item: ExtentedEquipment) => void;
 } | null>(null);
 
 export function useEquipmentContext() {

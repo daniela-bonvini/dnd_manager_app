@@ -1,4 +1,4 @@
-import { Loader, Plus } from "lucide-react";
+import { CircleDollarSign, Frown, Loader } from "lucide-react";
 import React from "react";
 import { getAllEquipment } from "../../services/dndApiService";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
@@ -6,6 +6,7 @@ import Modal from "../Modal/Modal";
 import "./AddButton.css";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 import { useStatsContext } from "../../contexts/StatsContext";
+import { useEquipmentContext } from "../../contexts/EquipmentContext";
 
 function AddButton({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -13,6 +14,7 @@ function AddButton({ buttonLabel }: { buttonLabel?: string }) {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const statsContext = useStatsContext();
+  const equipmentContext = useEquipmentContext();
 
   async function handleAddButtonClick() {
     setIsModalOpen(true);
@@ -34,10 +36,20 @@ function AddButton({ buttonLabel }: { buttonLabel?: string }) {
 
   return (
     <>
-      <button onClick={handleAddButtonClick} type="button">
-        <Plus />
-        {buttonLabel}
-      </button>
+      {statsContext.money === 0 ? (
+        <p>
+          <span>
+            You have no more money. <Frown />
+          </span>
+          <br />
+          <span>Try selling some items.</span>
+        </p>
+      ) : (
+        <button onClick={handleAddButtonClick} type="button">
+          <CircleDollarSign />
+          {buttonLabel}
+        </button>
+      )}
 
       {isModalOpen && (
         <Modal handleDismiss={handleCloseModal}>
@@ -48,7 +60,7 @@ function AddButton({ buttonLabel }: { buttonLabel?: string }) {
               Loading...
             </span>
           ) : (
-            <EquipmentGrid equipmentList={equipmentList} handleDismiss={handleCloseModal} />
+            <EquipmentGrid equipmentList={equipmentList} handleButtonClick={equipmentContext.addEquipment} />
           )}
         </Modal>
       )}

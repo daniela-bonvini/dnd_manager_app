@@ -8,6 +8,7 @@ import AddButton from "../AddButton/AddButton";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import { EquipmentContext } from "../../contexts/EquipmentContext";
 import { useStatsContext } from "../../contexts/StatsContext";
+import RemoveButton from "../RemoveButton";
 
 //think about moving here  money management too and removing spells and equipment management from framework
 function Inventory() {
@@ -36,13 +37,22 @@ function Inventory() {
   }
 
   function addEquipment(item: ExtentedEquipment) {
-    setEquipment([...equipment, item]);
+    const updatedEquipment = [...equipment, item];
+    setEquipment(updatedEquipment);
+    setFilteredEquipment(updatedEquipment);
     statsContext.setMoney(statsContext.money - item.cost);
+  }
+
+  function removeEquipment(item: ExtentedEquipment) {
+    const updatedEquipmentList = equipment.filter((equip) => equip.index !== item.index);
+    setEquipment(updatedEquipmentList);
+    setFilteredEquipment(updatedEquipmentList);
+    statsContext.setMoney(statsContext.money + item.cost);
   }
 
   return (
     <>
-      <EquipmentContext.Provider value={{ addEquipment: addEquipment }}>
+      <EquipmentContext.Provider value={{ addEquipment: addEquipment, removeEquipment: removeEquipment, equipmentInInventory: equipment }}>
         <div>
           <div>
             <PackageOpenIcon />
@@ -69,6 +79,7 @@ function Inventory() {
             resetFilteredList={resetFilteredEquipment}
           ></SearchBar>
           <AddButton buttonLabel={"Buy Equipment"} />
+          <RemoveButton buttonLabel={"Sell Equipment"} />
         </div>
       </EquipmentContext.Provider>
     </>
