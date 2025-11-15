@@ -1,14 +1,15 @@
-import { CircleDollarSign, Frown, Loader } from "lucide-react";
+import { CircleDollarSign, Frown } from "lucide-react";
 import React from "react";
 import { getAllEquipment } from "../../services/dndApiService";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import Modal from "../Modal/Modal";
-import "./AddButton.css";
+import "./BuyEquipment.css";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 import { useStatsContext } from "../../contexts/StatsContext";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
+import Spinner from "../Spinner/Spinner";
 
-function AddButton({ buttonLabel }: { buttonLabel?: string }) {
+function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [equipmentList, setEquipmentList] = React.useState<ExtentedEquipment[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -54,17 +55,10 @@ function AddButton({ buttonLabel }: { buttonLabel?: string }) {
       {isModalOpen && (
         <Modal handleDismiss={handleCloseModal}>
           <h3>Available Equipment under {statsContext.money} gold</h3>
-          {isLoading ? (
-            <span className="loading-indicator">
-              <Loader className="spinner" />
-              Loading...
-            </span>
-          ) : (
-            <EquipmentGrid equipmentList={equipmentList} handleButtonClick={equipmentContext.addEquipment} />
-          )}
+          {isLoading ? <Spinner /> : <EquipmentGrid equipmentList={equipmentList} handleButtonClick={equipmentContext.buyEquipment} />}
         </Modal>
       )}
     </>
   );
 }
-export default AddButton;
+export default BuyEquipment;

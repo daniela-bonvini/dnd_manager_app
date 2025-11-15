@@ -4,11 +4,11 @@ import * as dndApiService from "../../services/dndApiService";
 import SearchBar from "../SearchBar";
 import { PackageOpenIcon } from "lucide-react";
 import { startingEquipmentIndexList } from "../../data/data";
-import AddButton from "../AddButton/AddButton";
+import BuyEquipment from "../BuyEquipment/BuyEquipment";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import { EquipmentContext } from "../../contexts/EquipmentContext";
 import { useStatsContext } from "../../contexts/StatsContext";
-import RemoveButton from "../RemoveButton";
+import SellEquipment from "../SellEquipment/SellEquipment";
 
 //think about moving here  money management too and removing spells and equipment management from framework
 function Inventory() {
@@ -36,14 +36,14 @@ function Inventory() {
     setFilteredEquipment(equipment);
   }
 
-  function addEquipment(item: ExtentedEquipment) {
+  function buyEquipment(item: ExtentedEquipment) {
     const updatedEquipment = [...equipment, item];
     setEquipment(updatedEquipment);
     setFilteredEquipment(updatedEquipment);
     statsContext.setMoney(statsContext.money - item.cost);
   }
 
-  function removeEquipment(item: ExtentedEquipment) {
+  function sellEquipment(item: ExtentedEquipment) {
     const updatedEquipmentList = equipment.filter((equip) => equip.index !== item.index);
     setEquipment(updatedEquipmentList);
     setFilteredEquipment(updatedEquipmentList);
@@ -52,7 +52,7 @@ function Inventory() {
 
   return (
     <>
-      <EquipmentContext.Provider value={{ addEquipment: addEquipment, removeEquipment: removeEquipment, equipmentInInventory: equipment }}>
+      <EquipmentContext.Provider value={{ buyEquipment: buyEquipment, sellEquipment: sellEquipment, equipmentInInventory: equipment }}>
         <div>
           <div>
             <PackageOpenIcon />
@@ -78,8 +78,8 @@ function Inventory() {
             setFilteredList={setFilteredEquipment}
             resetFilteredList={resetFilteredEquipment}
           ></SearchBar>
-          <AddButton buttonLabel={"Buy Equipment"} />
-          <RemoveButton buttonLabel={"Sell Equipment"} />
+          <BuyEquipment buttonLabel={"Buy Equipment"} />
+          <SellEquipment buttonLabel={"Sell Equipment"} />
         </div>
       </EquipmentContext.Provider>
     </>

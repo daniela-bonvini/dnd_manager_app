@@ -2,7 +2,7 @@ import React from "react";
 import { X as Close } from "lucide-react";
 import "./Modal.css";
 
-function Modal({ handleDismiss, children }: { handleDismiss: () => void; children: React.ReactNode }) {
+function ModalWrapper({ handleDismiss, children }: { handleDismiss: () => void; children: React.ReactNode }) {
   React.useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.code === "Escape") {
@@ -27,6 +27,14 @@ function Modal({ handleDismiss, children }: { handleDismiss: () => void; childre
         {children}
       </div>
     </div>
+  );
+}
+
+function Modal({ handleDismiss, children }: { handleDismiss: () => void; children: React.ReactNode }) {
+  return (
+    <>
+      <ModalWrapper handleDismiss={handleDismiss}>{children}</ModalWrapper>
+    </>
   );
 }
 
