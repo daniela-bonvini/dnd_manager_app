@@ -9,6 +9,7 @@ import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import { EquipmentContext } from "../../contexts/EquipmentContext";
 import { useStatsContext } from "../../contexts/StatsContext";
 import SellEquipment from "../SellEquipment/SellEquipment";
+import InventoryList from "../InventoryList/InventoryList";
 
 //think about moving here  money management too and removing spells and equipment management from framework
 function Inventory() {
@@ -58,19 +59,7 @@ function Inventory() {
             <PackageOpenIcon />
             <h2>Inventory</h2>
           </div>
-          <div className="inventory-wrapper">
-            {filteredEquipment.length === 0 ? (
-              <p>No results found</p>
-            ) : (
-              <ul className="inventory-list">
-                {filteredEquipment.map((item) => (
-                  <li key={item.index} className="inventory-item">
-                    {item.name} : {item.cost} gold
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <InventoryList equipmentList={filteredEquipment}></InventoryList>
           <SearchBar
             placeholder={"Search equipment..."}
             listToSearch={equipment}

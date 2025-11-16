@@ -15,32 +15,6 @@
   justify-content: center;
 }
 
-.inventory-list {
-  list-style: none;
-  padding-left: 0;
-  text-align: left;
-  margin: var(--spacing-xl) 0;
-}
-
-.inventory-list li {
-  padding: var(--spacing-xs) 0;
-}
-
-.inventory-wrapper {
-  border: var(--border-stroke-width-md) solid var(--color-primary);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-xl) calc(var(--spacing-lg) * 1.3);
-  background: #faf8f3;
-  box-shadow: var(--shadow-sm);
-}
-
-.inventory-item {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px dotted #666;
-  padding: var(--spacing-md) 0;
-}
-
 .inventory-buttons {
   display: flex;
   gap: var(--spacing-lg);
