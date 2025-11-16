@@ -1,5 +1,5 @@
 import "./AdventurerStats.css";
-import { ArrowBigUpDash, PiggyBank } from "lucide-react";
+import { ArrowBigUpDash, PiggyBank, ShieldUser } from "lucide-react";
 import { useStatsContext } from "../../contexts/StatsContext";
 
 function AdventurerStats() {
@@ -9,6 +9,11 @@ function AdventurerStats() {
   return (
     <>
       <div className="adventurer-stats">
+        <div className="stats-item">
+          <ShieldUser size={20} />
+          <label>NAME: </label>
+          <span>Brave adventurer</span>
+        </div>
         <div className="stats-item">
           <ArrowBigUpDash size={20} />
           <label>LEVEL: </label>

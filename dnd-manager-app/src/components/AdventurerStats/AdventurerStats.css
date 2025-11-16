@@ -2,7 +2,7 @@
   display: grid;
   padding: 10px;
   background-color: var(--sections-background-color);
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   justify-content: space-between;
   padding: 1rem 2rem;
   border: var(--border-stroke-width-md) solid var(--color-primary);

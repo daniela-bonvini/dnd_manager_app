@@ -30,7 +30,7 @@ h1 {
   font-size: 3rem;
   line-height: 1.1;
   text-align: center;
-  margin-top: var(--spacing-xl);
+  margin: var(--spacing-md) 0;
   letter-spacing: 1px;
   color: #1a2a33;
 }

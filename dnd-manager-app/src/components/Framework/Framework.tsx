@@ -5,8 +5,8 @@ import AdventurerStats from "../AdventurerStats/AdventurerStats";
 import Inventory from "../Inventory/Inventory";
 
 function Framework() {
-  const [level, setLevel] = React.useState<number>(1);
-  const [money, setMoney] = React.useState<number>(250);
+  const [level, setLevel] = React.useState<number>(2);
+  const [money, setMoney] = React.useState<number>(300);
 
   return (
     <>

@@ -1,4 +1,7 @@
 :root {
+  /* Fonts */
+  --font-family-base: "Marcellus";
+
   /* Colors */
   --color-primary: #333;
   --color-secondary: #555;
