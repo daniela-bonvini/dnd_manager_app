@@ -13,7 +13,7 @@ function Framework() {
       <StatsContext.Provider value={{ level, setLevel, money, setMoney }}>
         <div className="dnd-frame">
           <div className="content">
-            <h1>D&D Manager</h1>
+            <h1>D&D Inventory Manager</h1>
             <AdventurerStats></AdventurerStats>
             <Inventory></Inventory>
           </div>

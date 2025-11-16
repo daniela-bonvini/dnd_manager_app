@@ -2,10 +2,10 @@ import { HandCoins } from "lucide-react";
 import React from "react";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
-import Modal from "../Modal/Modal";
+import Modal from "../shared/Modal/Modal";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
-import Tooltip from "../Tooltip/Tooltip";
-import Button from "../Button/Button";
+import Tooltip from "../shared/Tooltip/Tooltip";
+import Button from "../shared/Button/Button";
 import { useStatsContext } from "../../contexts/StatsContext";
 
 function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {

@@ -1,12 +1,12 @@
 import { CircleDollarSign } from "lucide-react";
 import React from "react";
-import Modal from "../Modal/Modal";
+import Modal from "../shared/Modal/Modal";
 import "./BuyEquipment.css";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 import { useStatsContext } from "../../contexts/StatsContext";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
-import Tooltip from "../Tooltip/Tooltip";
-import Button from "../Button/Button";
+import Tooltip from "../shared/Tooltip/Tooltip";
+import Button from "../shared/Button/Button";
 
 function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);

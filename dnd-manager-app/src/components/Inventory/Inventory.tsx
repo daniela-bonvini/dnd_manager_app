@@ -1,7 +1,7 @@
 import React from "react";
 import "./Inventory.css";
 import * as dndApiService from "../../services/dndApiService";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../shared/SearchBar/SearchBar";
 import { PackageOpenIcon } from "lucide-react";
 import { startingEquipmentIndexList } from "../../data/data";
 import BuyEquipment from "../BuyEquipment/BuyEquipment";
@@ -11,7 +11,7 @@ import { useStatsContext } from "../../contexts/StatsContext";
 import SellEquipment from "../SellEquipment/SellEquipment";
 import InventoryList from "../InventoryList/InventoryList";
 import { getAllEquipment } from "../../services/dndApiService";
-import Spinner from "../Spinner/Spinner";
+import Spinner from "../shared/Spinner/Spinner";
 
 //think about moving here  money management too and removing spells and equipment management from framework
 function Inventory() {

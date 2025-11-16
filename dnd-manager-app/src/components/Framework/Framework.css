@@ -33,11 +33,13 @@
   }
 }
 
+/* Position the spinning d20 upper-left */
 .dnd-frame::before {
   top: calc(var(--topDistance) * -1);
   left: calc(var(--topDistance) * -1);
 }
 
+/* Positions the spinning d20 upper-right */
 .dnd-frame::after {
   bottom: calc(var(--topDistance) * -1);
   right: calc(var(--topDistance) * -1);
@@ -45,7 +47,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto;
   grid-template-rows: auto auto;
 }
 
