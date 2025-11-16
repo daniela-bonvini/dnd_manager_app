@@ -3,6 +3,7 @@
   align-items: center;
   gap: var(--spacing-md);
   font-size: var(--font-size-md);
+  justify-content: center;
 }
 
 .loading-indicator .loading-icon {

@@ -22,13 +22,17 @@ function EquipmentGrid({
   }
 
   return (
-    <div className="equipment-grid">
+    <>
       {equipmentList.length === 0 ? (
         <span>There are no items available for your budget</span>
       ) : (
-        equipmentList.map((item) => <EquipmentGridCard key={item.index} item={item} handleButtonClick={handleItemClick} />)
+        <div className="equipment-grid">
+          {equipmentList.map((item) => (
+            <EquipmentGridCard key={item.index} item={item} handleButtonClick={handleItemClick} />
+          ))}
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

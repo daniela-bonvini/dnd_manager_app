@@ -18,6 +18,7 @@ function Inventory() {
   const hasFetchedStartingEquipment = React.useRef(false);
 
   const statsContext = useStatsContext();
+  const { money } = statsContext;
 
   React.useEffect(() => {
     if (hasFetchedStartingEquipment.current) return;
@@ -25,7 +26,6 @@ function Inventory() {
 
     async function loadStartingEquipment() {
       const results = await Promise.all(startingEquipmentIndexList.map((index) => dndApiService.getEquipment(index)));
-      console.log("Loaded starting equipment:", results);
       setEquipment(results.filter(Boolean));
       setFilteredEquipment(results.filter(Boolean));
     }
@@ -39,16 +39,18 @@ function Inventory() {
 
   function buyEquipment(item: ExtentedEquipment) {
     const updatedEquipment = [...equipment, item];
+    if (money < item.cost) return;
+
     setEquipment(updatedEquipment);
     setFilteredEquipment(updatedEquipment);
-    statsContext.setMoney(statsContext.money - item.cost);
+    statsContext.setMoney(money - item.cost);
   }
 
   function sellEquipment(item: ExtentedEquipment) {
     const updatedEquipmentList = equipment.filter((equip) => equip.index !== item.index);
     setEquipment(updatedEquipmentList);
     setFilteredEquipment(updatedEquipmentList);
-    statsContext.setMoney(statsContext.money + item.cost);
+    statsContext.setMoney(money + item.cost);
   }
 
   return (
