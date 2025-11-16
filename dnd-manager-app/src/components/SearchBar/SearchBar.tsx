@@ -1,6 +1,7 @@
 import { Delete, Search } from "lucide-react";
 import React from "react";
 import "./SearchBar.css";
+import Button from "../Button/Button";
 
 function SearchBar<T extends { name: string }>({
   placeholder,
@@ -32,15 +33,15 @@ function SearchBar<T extends { name: string }>({
   }
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="searchbar-container">
+    <div className="searchbar-input-container">
       <span className="searchbar-input-wrapper">
         <Search width={20} height={20} />
-        <input id="search-input" type="text" value={query} onChange={handleSearch} placeholder={placeholder} />
+        <input className="searchbar-input" id="search-input" type="text" value={query} onChange={handleSearch} placeholder={placeholder} />
       </span>
-      <button onClick={handleReset} type="button" className="searchbar-reset-button">
+      <Button buttonLabel="RESET" handleOpenModal={handleReset}>
         <Delete />
-      </button>
-    </form>
+      </Button>
+    </div>
   );
 }
 

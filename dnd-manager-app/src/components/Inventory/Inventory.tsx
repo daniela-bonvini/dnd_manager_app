@@ -53,8 +53,8 @@ function Inventory() {
   return (
     <>
       <EquipmentContext.Provider value={{ buyEquipment: buyEquipment, sellEquipment: sellEquipment, equipmentInInventory: equipment }}>
-        <div className="section">
-          <div className="section-header">
+        <div className="inventory-section-wrapper">
+          <div className="inventory-header">
             <PackageOpenIcon />
             <h2>Inventory</h2>
           </div>

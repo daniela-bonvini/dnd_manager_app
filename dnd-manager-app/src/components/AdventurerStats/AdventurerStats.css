@@ -1,11 +1,11 @@
 .adventurer-stats {
   display: grid;
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: var(--sections-background-color);
   grid-template-columns: auto auto;
   justify-content: space-between;
   padding: 1rem 2rem;
-  border: 2px solid #333;
+  border: var(--border-stroke-width-md) solid var(--color-primary);
   border-radius: 6px;
   background: #f7f6f2;
   margin: 2rem auto;

@@ -9,6 +9,11 @@
   --color-hover: #f0f0f0;
   --color-disabled: #ccc;
 
+  /* Background Colors */
+  --app-background-color: #242424;
+  --sections-background-color: #f9f9f9;
+  --button-background-color: #e9e3d4;
+
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -16,6 +21,11 @@
   --spacing-lg: 16px;
   --spacing-xl: 24px;
   --spacing-2xl: 32px;
+
+  /* Border stroke width */
+  --border-stroke-width-sm: 1px;
+  --border-stroke-width-md: 2px;
+  --border-stroke-width-lg: 3px;
 
   /* Border Radius */
   --border-radius-sm: 4px;

@@ -1,8 +1,8 @@
 .loading-indicator {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 16px;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-md);
 }
 
 .loading-indicator .loading-icon {

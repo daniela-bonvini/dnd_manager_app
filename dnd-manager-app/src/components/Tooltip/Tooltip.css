@@ -5,20 +5,20 @@
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  background-color: #333;
-  color: #fff;
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
   text-align: center;
-  border-radius: 6px;
-  padding: 8px 12px;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
   position: absolute;
-  z-index: 1;
+  z-index: var(--z-index-tooltip);
   bottom: 125%;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-normal);
   white-space: nowrap;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
 }
 
 .tooltip .tooltiptext::after {
@@ -29,7 +29,7 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #333 transparent transparent transparent;
+  border-color: var(--color-primary) transparent transparent transparent;
 }
 
 .tooltip-visible .tooltiptext {
