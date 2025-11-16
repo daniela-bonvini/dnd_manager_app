@@ -7,10 +7,11 @@ import Inventory from "../Inventory/Inventory";
 function Framework() {
   const [level, setLevel] = React.useState<number>(2);
   const [money, setMoney] = React.useState<number>(300);
+  const [adventurerFinanceState, setAdventurerFinanceState] = React.useState<string>("Wealthy");
 
   return (
     <>
-      <StatsContext.Provider value={{ level, setLevel, money, setMoney }}>
+      <StatsContext.Provider value={{ adventurerFinanceState, setAdventurerFinanceState, level, setLevel, money, setMoney }}>
         <div className="dnd-frame">
           <div className="content">
             <h1>D&D Inventory Manager</h1>

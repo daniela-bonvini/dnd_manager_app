@@ -1,7 +1,15 @@
 import React from "react";
 
 export const StatsContext = React.createContext<
-  { level: number; setLevel: (level: number) => void; money: number; setMoney: (money: number) => void } | undefined
+  | {
+      adventurerFinanceState: string;
+      setAdventurerFinanceState: (state: string) => void;
+      level: number;
+      setLevel: (level: number) => void;
+      money: number;
+      setMoney: (money: number) => void;
+    }
+  | undefined
 >(undefined);
 
 export function useStatsContext() {
