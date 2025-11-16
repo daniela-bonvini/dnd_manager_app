@@ -1,4 +1,5 @@
-import { HandCoins } from "lucide-react";
+import { HandCoins, Volume2, VolumeX } from "lucide-react";
+import React from "react";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import Modal from "../shared/Modal/Modal";
@@ -7,17 +8,47 @@ import Tooltip from "../shared/Tooltip/Tooltip";
 import Button from "../shared/Button/Button";
 import { useStatsContext } from "../../contexts/StatsContext";
 import useToggle from "../../custom-hooks/use-toggle";
+import "./SellEquipment.css";
 
 function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, toggleIsModalOpen] = useToggle(false);
+  const [isSoundEnabled, setIsSoundEnabled] = React.useState(() => {
+    return localStorage.getItem("sellSoundEnabled") !== "false";
+  });
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+
+  React.useEffect(() => {
+    if (audioRef.current) return;
+
+    const audio = new Audio("/assets/cash-register-sound.mp3");
+    audio.preload = "auto";
+    audio.volume = 0.1;
+    audioRef.current = audio;
+  }, []);
 
   const equipmentContext = useEquipmentContext();
   const { equipmentInInventory, sellEquipment } = equipmentContext;
   const statsContext = useStatsContext();
   const { money } = statsContext;
 
+  function toggleSound() {
+    const newState = !isSoundEnabled;
+    setIsSoundEnabled(newState);
+    localStorage.setItem("sellSoundEnabled", String(newState));
+  }
+
   async function handleSellEquipmentClick(item: ExtentedEquipment) {
     sellEquipment(item);
+    if (isSoundEnabled) {
+      playSound();
+    }
+  }
+
+  function playSound() {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch((error: Error) => console.log("Audio play failed:", error));
+    }
   }
 
   return (
@@ -30,7 +61,12 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
 
       {isModalOpen && (
         <Modal handleDismiss={toggleIsModalOpen}>
-          <h3>Sellable equipment. Current money {money}</h3>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+            <h3>Sellable equipment. Current money {money}</h3>
+            <button onClick={toggleSound} title={isSoundEnabled ? "Disable sound" : "Enable sound"}>
+              {isSoundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
+            </button>
+          </div>
           {<EquipmentGrid equipmentList={equipmentInInventory} handleButtonClick={handleSellEquipmentClick} />}
         </Modal>
       )}
