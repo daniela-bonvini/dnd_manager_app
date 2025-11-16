@@ -18,12 +18,12 @@
   flex-grow: 1;
   gap: var(--spacing-xs);
   justify-content: flex-start;
+  background-color: var(--sections-background-color);
 }
 
 .searchbar-input {
   border: var(--border-stroke-width-md) solid var(--color-primary);
   border-radius: var(--border-radius-md);
-  background: transparent;
   font-size: inherit;
   background-color: var(--searchbar-background-color);
 }

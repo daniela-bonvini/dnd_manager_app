@@ -11,7 +11,8 @@ export async function getAllEquipment() {
     url: item.url,
     cost: Math.floor(Math.random() * 500) + 1, // Mock cost data
   }));
-  return extendedEquipmentList;
+  const orderedEquipmentList = extendedEquipmentList.sort((a, b) => a.cost - b.cost);
+  return orderedEquipmentList;
 }
 
 export async function getEquipment(index: string) {

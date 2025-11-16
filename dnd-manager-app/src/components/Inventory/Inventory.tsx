@@ -64,7 +64,7 @@ function Inventory() {
   }
 
   function buyEquipment(item: ExtentedEquipment) {
-    const updatedEquipment = [...equipment, item];
+    const updatedEquipment = [item, ...equipment];
     if (money < item.cost) return;
 
     setEquipment(updatedEquipment);
