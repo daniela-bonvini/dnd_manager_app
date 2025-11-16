@@ -20,6 +20,7 @@ function Inventory() {
   const [buyableEquipmentList, setBuyableEquipmentList] = React.useState<ExtentedEquipment[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const hasFetchedStartingEquipment = React.useRef(false);
+  const hasFetchedBuyableEquipment = React.useRef(false);
 
   const statsContext = useStatsContext();
   const { money } = statsContext;
@@ -39,6 +40,13 @@ function Inventory() {
       }
     }
 
+    loadStartingEquipment();
+  }, []);
+
+  React.useEffect(() => {
+    if (hasFetchedBuyableEquipment.current) return;
+    hasFetchedBuyableEquipment.current = true;
+
     async function fetchBuyableEquipment() {
       try {
         setIsLoading(true);
@@ -55,7 +63,6 @@ function Inventory() {
       }
     }
 
-    loadStartingEquipment();
     fetchBuyableEquipment();
   }, [equipment, money]);
 

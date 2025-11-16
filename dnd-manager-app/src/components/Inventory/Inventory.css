@@ -1,5 +1,4 @@
 .inventory-section-wrapper {
-  padding: var(--spacing-xl) calc(var(--spacing-xl) * 1.5);
   margin: var(--spacing-xl) auto;
   max-width: 800px;
 }

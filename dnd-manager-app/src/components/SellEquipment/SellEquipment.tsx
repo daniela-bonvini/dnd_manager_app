@@ -6,10 +6,13 @@ import Modal from "../Modal/Modal";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 import Tooltip from "../Tooltip/Tooltip";
 import Button from "../Button/Button";
+import { useStatsContext } from "../../contexts/StatsContext";
 
 function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const equipmentContext = useEquipmentContext();
   const { equipmentInInventory, sellEquipment } = equipmentContext;
+  const statsContext = useStatsContext();
+  const { money } = statsContext;
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -36,7 +39,7 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
 
       {isModalOpen && (
         <Modal handleDismiss={handleCloseModal}>
-          <h3>Sellable equipment</h3>
+          <h3>Sellable equipment. Current money {money}</h3>
           {<EquipmentGrid equipmentList={equipmentInInventory} handleButtonClick={handleSellEquipmentClick} />}
         </Modal>
       )}
