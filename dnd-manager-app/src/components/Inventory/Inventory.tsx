@@ -10,11 +10,15 @@ import { EquipmentContext } from "../../contexts/EquipmentContext";
 import { useStatsContext } from "../../contexts/StatsContext";
 import SellEquipment from "../SellEquipment/SellEquipment";
 import InventoryList from "../InventoryList/InventoryList";
+import { getAllEquipment } from "../../services/dndApiService";
+import Spinner from "../Spinner/Spinner";
 
 //think about moving here  money management too and removing spells and equipment management from framework
 function Inventory() {
   const [equipment, setEquipment] = React.useState<ExtentedEquipment[]>([]);
   const [filteredEquipment, setFilteredEquipment] = React.useState<ExtentedEquipment[]>([]);
+  const [buyableEquipmentList, setBuyableEquipmentList] = React.useState<ExtentedEquipment[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
   const hasFetchedStartingEquipment = React.useRef(false);
 
   const statsContext = useStatsContext();
@@ -25,13 +29,35 @@ function Inventory() {
     hasFetchedStartingEquipment.current = true;
 
     async function loadStartingEquipment() {
-      const results = await Promise.all(startingEquipmentIndexList.map((index) => dndApiService.getEquipment(index)));
-      setEquipment(results.filter(Boolean));
-      setFilteredEquipment(results.filter(Boolean));
+      try {
+        setIsLoading(true);
+        const results = await Promise.all(startingEquipmentIndexList.map((index) => dndApiService.getEquipment(index)));
+        setEquipment(results.filter(Boolean));
+        setFilteredEquipment(results.filter(Boolean));
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    async function fetchBuyableEquipment() {
+      try {
+        setIsLoading(true);
+        const allEquipment = await getAllEquipment();
+        const affordableEquipment = allEquipment.filter((item: ExtentedEquipment) => item.cost <= money);
+        const affordableEquipmentNotInInventory = affordableEquipment.filter(
+          (item) => !equipment.some((ownedItem) => ownedItem.index === item.index)
+        );
+        setBuyableEquipmentList(affordableEquipmentNotInInventory);
+      } catch (error) {
+        console.error("Error fetching equipment:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
     loadStartingEquipment();
-  }, []);
+    fetchBuyableEquipment();
+  }, [equipment, money]);
 
   function resetFilteredEquipment() {
     setFilteredEquipment(equipment);
@@ -43,6 +69,7 @@ function Inventory() {
 
     setEquipment(updatedEquipment);
     setFilteredEquipment(updatedEquipment);
+    setBuyableEquipmentList(buyableEquipmentList.filter((equip) => equip.index !== item.index));
     statsContext.setMoney(money - item.cost);
   }
 
@@ -55,13 +82,20 @@ function Inventory() {
 
   return (
     <>
-      <EquipmentContext.Provider value={{ buyEquipment: buyEquipment, sellEquipment: sellEquipment, equipmentInInventory: equipment }}>
+      <EquipmentContext.Provider
+        value={{
+          buyEquipment: buyEquipment,
+          sellEquipment: sellEquipment,
+          equipmentInInventory: equipment,
+          buyableEquipment: buyableEquipmentList,
+        }}
+      >
         <div className="inventory-section-wrapper">
           <div className="inventory-header">
             <PackageOpenIcon />
             <h2>Inventory</h2>
           </div>
-          <InventoryList equipmentList={filteredEquipment}></InventoryList>
+          {isLoading ? <Spinner /> : <InventoryList equipmentList={filteredEquipment}></InventoryList>}
           <SearchBar
             placeholder={"Search equipment..."}
             listToSearch={equipment}

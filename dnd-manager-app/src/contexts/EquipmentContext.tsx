@@ -5,6 +5,7 @@ export const EquipmentContext = React.createContext<{
   equipmentInInventory: ExtentedEquipment[];
   buyEquipment: (item: ExtentedEquipment) => void;
   sellEquipment: (item: ExtentedEquipment) => void;
+  buyableEquipment?: ExtentedEquipment[];
 } | null>(null);
 
 export function useEquipmentContext() {
