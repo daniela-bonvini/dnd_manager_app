@@ -5,19 +5,22 @@ import { useEffect } from "react";
 
 function AdventurerStats() {
   const statsContext = useStatsContext();
-  const { adventurerFinanceState, level, money } = statsContext;
+  const { adventurerFinanceState, level, money, setAdventurerFinanceState } = statsContext;
+
+  const getFinanceState = (amount: number): string => {
+    if (amount === 0) return "Bankrupt";
+    if (amount < 150) return "Poor";
+    if (amount < 300) return "Struggling";
+    if (amount < 500) return "Wealthy";
+    return "Rich";
+  };
 
   useEffect(() => {
-    if (money >= 300) {
-      statsContext.setAdventurerFinanceState("Wealthy");
-    } else if (money >= 150) {
-      statsContext.setAdventurerFinanceState("Struggling");
-    } else if (money === 0) {
-      statsContext.setAdventurerFinanceState("Bankrupt");
-    } else {
-      statsContext.setAdventurerFinanceState("Poor");
+    const newState = getFinanceState(money);
+    if (newState !== adventurerFinanceState) {
+      setAdventurerFinanceState(newState);
     }
-  }, [money, statsContext]);
+  }, [money, adventurerFinanceState, setAdventurerFinanceState]);
 
   return (
     <>
