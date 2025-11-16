@@ -1,4 +1,3 @@
-import { HandCoins } from "lucide-react";
 import "./Button.css";
 
 function Button({
