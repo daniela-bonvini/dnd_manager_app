@@ -28,8 +28,8 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
 
   return (
     <>
-      <Tooltip text="You don't have any items to sell. Try buying some." show={equipmentInInventory.length === 0}>
-        <Button buttonLabel={buttonLabel} handleOpenModal={handleOpenModal} disabled={equipmentInInventory.length === 0}>
+      <Tooltip text="You don't have any items to sell. Try buying some." show={equipmentInInventory.length <= 0}>
+        <Button buttonLabel={buttonLabel} handleOpenModal={handleOpenModal} disabled={equipmentInInventory.length <= 0}>
           <HandCoins />
         </Button>
       </Tooltip>

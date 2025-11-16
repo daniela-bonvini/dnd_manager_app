@@ -42,7 +42,7 @@ function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   return (
     <>
       <Tooltip text="You don't have enough money. Try selling some items." show={money === 0}>
-        <Button buttonLabel={buttonLabel} handleOpenModal={handleAddButtonClick} disabled={money === 0}>
+        <Button buttonLabel={buttonLabel} handleOpenModal={handleAddButtonClick} disabled={money <= 0}>
           <CircleDollarSign />
         </Button>
       </Tooltip>
