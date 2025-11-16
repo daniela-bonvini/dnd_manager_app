@@ -35,7 +35,7 @@ function SearchBar<T extends { name: string }>({
   return (
     <div className="searchbar-input-container">
       <span className="searchbar-input-wrapper">
-        <Search width={20} height={20} />
+        <Search width={20} height={20} color="black" />
         <input className="searchbar-input" id="search-input" type="text" value={query} onChange={handleSearch} placeholder={placeholder} />
       </span>
       <Button buttonLabel="RESET" handleOpenModal={handleReset}>

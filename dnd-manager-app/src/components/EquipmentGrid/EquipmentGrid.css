@@ -6,7 +6,7 @@
 }
 
 .equipment-card {
-  border: 1px solid var(--color-border);
+  border: var(--border-stroke-width-sm) solid var(--color-border);
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
   text-align: center;

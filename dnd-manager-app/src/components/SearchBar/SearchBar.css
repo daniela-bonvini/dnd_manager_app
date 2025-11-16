@@ -25,4 +25,5 @@
   border-radius: var(--border-radius-md);
   background: transparent;
   font-size: inherit;
+  background-color: var(--searchbar-background-color);
 }

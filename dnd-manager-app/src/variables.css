@@ -13,6 +13,7 @@
   --app-background-color: #242424;
   --sections-background-color: #f9f9f9;
   --button-background-color: #e9e3d4;
+  --searchbar-background-color: #e9e3d4;
 
   /* Spacing */
   --spacing-xs: 4px;
@@ -26,6 +27,8 @@
   --border-stroke-width-sm: 1px;
   --border-stroke-width-md: 2px;
   --border-stroke-width-lg: 3px;
+  --border-stroke-width-xl: 4px;
+  --border-stroke-width-xxl: 8px;
 
   /* Border Radius */
   --border-radius-sm: 4px;

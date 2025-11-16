@@ -14,7 +14,7 @@
 .dnd-frame {
   position: relative;
   padding: 2rem;
-  border: 8px double #222;
+  border: var(--border-stroke-width-xxl) double var(--color-primary);
   background: url("/parchment-texture.png"), #f6f3e9;
   background-blend-mode: multiply;
 }
