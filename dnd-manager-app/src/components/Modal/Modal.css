@@ -15,21 +15,30 @@
 
 .dialog {
   position: relative;
-  background: var(--color-background);
+  background: var(--sections-background-color);
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-2xl);
   overflow: auto;
   box-shadow: var(--shadow-lg);
+  border: var(--border-stroke-width-md) solid var(--color-primary);
 }
 
 .closeBtn {
   position: absolute;
-  top: 0;
-  right: 0;
-  padding: var(--spacing-lg);
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  padding: var(--spacing-md);
   color: var(--color-text);
-  transform: translateY(-100%);
   cursor: pointer;
   background: transparent;
   border: none;
+  border-radius: var(--border-radius-md);
+  transition: background-color var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  background-color: var(--color-hover);
 }

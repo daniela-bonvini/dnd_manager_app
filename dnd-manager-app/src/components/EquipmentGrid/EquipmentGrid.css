@@ -6,15 +6,18 @@
 }
 
 .equipment-card {
-  border: var(--border-stroke-width-sm) solid var(--color-border);
+  border: var(--border-stroke-width-md) solid var(--color-primary);
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-lg);
   text-align: center;
   cursor: pointer;
   transition: all var(--transition-fast);
+  background: var(--color-background);
+  box-shadow: var(--shadow-sm);
 }
 
 .equipment-card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+  background-color: var(--color-hover);
 }
