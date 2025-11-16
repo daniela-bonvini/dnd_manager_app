@@ -1,0 +1,47 @@
+.section {
+  padding: 2rem 3rem;
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid #333;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  justify-content: center;
+}
+
+.inventory-list {
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+  margin: 1.5rem 0;
+}
+
+.inventory-list li {
+  padding: 0.25rem 0;
+}
+
+.inventory-wrapper {
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  background: #faf8f3;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted #666;
+  padding: 0.4rem 0;
+}
+
+.inventory-buttons {
+  display: flex;
+  gap: 1rem;
+}

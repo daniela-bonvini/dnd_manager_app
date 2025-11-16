@@ -9,12 +9,12 @@ function AdventurerStats() {
   return (
     <>
       <div className="adventurer-stats">
-        <div className="adventurer-stats__item">
+        <div className="stats-item">
           <ArrowBigUpDash size={16} />
           <label>LEVEL: </label>
           <span>{level}</span>
         </div>
-        <div className="adventurer-stats__item">
+        <div className="stats-item">
           <PiggyBank size={16} />
           <label>MONEY: </label>
           <span>{money}</span>

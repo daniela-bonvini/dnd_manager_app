@@ -53,19 +53,18 @@ function Inventory() {
   return (
     <>
       <EquipmentContext.Provider value={{ buyEquipment: buyEquipment, sellEquipment: sellEquipment, equipmentInInventory: equipment }}>
-        <div>
-          <div>
+        <div className="section">
+          <div className="section-header">
             <PackageOpenIcon />
             <h2>Inventory</h2>
           </div>
-          <div>
-            {/* skeleton? */}
+          <div className="inventory-wrapper">
             {filteredEquipment.length === 0 ? (
               <p>No results found</p>
             ) : (
-              <ul>
+              <ul className="inventory-list">
                 {filteredEquipment.map((item) => (
-                  <li key={item.index}>
+                  <li key={item.index} className="inventory-item">
                     {item.name} : {item.cost} gold
                   </li>
                 ))}
@@ -78,8 +77,10 @@ function Inventory() {
             setFilteredList={setFilteredEquipment}
             resetFilteredList={resetFilteredEquipment}
           ></SearchBar>
-          <BuyEquipment buttonLabel={"Buy Equipment"} />
-          <SellEquipment buttonLabel={"Sell Equipment"} />
+          <div className="inventory-buttons">
+            <BuyEquipment buttonLabel={"Buy Equipment"} />
+            <SellEquipment buttonLabel={"Sell Equipment"} />
+          </div>
         </div>
       </EquipmentContext.Provider>
     </>

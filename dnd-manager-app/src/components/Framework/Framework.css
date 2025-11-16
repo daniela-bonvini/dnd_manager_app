@@ -1,5 +1,5 @@
 :root {
-  --topDistance: 21px;
+  --topDistance: 27px;
 }
 
 @keyframes logo-spin {
@@ -14,8 +14,9 @@
 .dnd-frame {
   position: relative;
   padding: 2rem;
-  border: 4px solid #2d2d2d;
-  background: #f4f1ea; /* parchment tone */
+  border: 8px double #222;
+  background: url("/parchment-texture.png"), #f6f3e9;
+  background-blend-mode: multiply;
 }
 
 @media (prefers-reduced-motion: no-preference) {

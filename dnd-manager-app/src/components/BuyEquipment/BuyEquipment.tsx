@@ -9,6 +9,7 @@ import { useStatsContext } from "../../contexts/StatsContext";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
 import Spinner from "../Spinner/Spinner";
 import Tooltip from "../Tooltip/Tooltip";
+import Button from "../Button/Button";
 
 function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -41,10 +42,9 @@ function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   return (
     <>
       <Tooltip text="You don't have enough money. Try selling some items." show={money === 0}>
-        <button onClick={handleAddButtonClick} type="button" disabled={money === 0}>
+        <Button buttonLabel={buttonLabel} handleOpenModal={handleAddButtonClick} disabled={money === 0}>
           <CircleDollarSign />
-          {buttonLabel}
-        </button>
+        </Button>
       </Tooltip>
 
       {isModalOpen && (

@@ -16,7 +16,6 @@ function Framework() {
             <h1>D&D Manager</h1>
             <AdventurerStats></AdventurerStats>
             <Inventory></Inventory>
-            <div>spellbook</div>
           </div>
         </div>
       </StatsContext.Provider>
