@@ -20,7 +20,7 @@ function Inventory() {
   const [buyableEquipmentList, setBuyableEquipmentList] = React.useState<ExtentedEquipment[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const hasFetchedStartingEquipment = React.useRef(false);
-  const hasFetchedBuyableEquipment = React.useRef(false);
+  const allFetchedEquipmentRef = React.useRef<ExtentedEquipment[]>([]);
 
   const statsContext = useStatsContext();
   const { money } = statsContext;
@@ -44,18 +44,12 @@ function Inventory() {
   }, []);
 
   React.useEffect(() => {
-    if (hasFetchedBuyableEquipment.current) return;
-    hasFetchedBuyableEquipment.current = true;
-
-    async function fetchBuyableEquipment() {
+    async function fetchAllEquipment() {
       try {
         setIsLoading(true);
         const allEquipment = await getAllEquipment();
-        const affordableEquipment = allEquipment.filter((item: ExtentedEquipment) => item.cost <= money);
-        const affordableEquipmentNotInInventory = affordableEquipment.filter(
-          (item) => !equipment.some((ownedItem) => ownedItem.index === item.index)
-        );
-        setBuyableEquipmentList(affordableEquipmentNotInInventory);
+        allFetchedEquipmentRef.current = allEquipment;
+        updateBuyableList(money, equipment);
       } catch (error) {
         console.error("Error fetching equipment:", error);
       } finally {
@@ -63,11 +57,23 @@ function Inventory() {
       }
     }
 
-    fetchBuyableEquipment();
+    if (allFetchedEquipmentRef.current.length === 0) {
+      fetchAllEquipment();
+    } else {
+      updateBuyableList(money, equipment);
+    }
   }, [equipment, money]);
 
   function resetFilteredEquipment() {
     setFilteredEquipment(equipment);
+  }
+
+  function updateBuyableList(currentMoney: number, currentEquipment: ExtentedEquipment[]) {
+    const affordableEquipment = allFetchedEquipmentRef.current.filter((item: ExtentedEquipment) => item.cost <= currentMoney);
+    const affordableEquipmentNotInInventory = affordableEquipment.filter(
+      (item) => !currentEquipment.some((ownedItem) => ownedItem.index === item.index)
+    );
+    setBuyableEquipmentList(affordableEquipmentNotInInventory);
   }
 
   function buyEquipment(item: ExtentedEquipment) {
