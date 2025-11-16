@@ -69,7 +69,9 @@ function Inventory() {
 
     setEquipment(updatedEquipment);
     setFilteredEquipment(updatedEquipment);
-    setBuyableEquipmentList(buyableEquipmentList.filter((equip) => equip.index !== item.index));
+    const listWithoutBoughtItem = buyableEquipmentList.filter((equip) => equip.index !== item.index);
+    const listUpdatedByRemainingMoney = listWithoutBoughtItem.filter((equip) => equip.cost <= money - item.cost);
+    setBuyableEquipmentList(listUpdatedByRemainingMoney);
     statsContext.setMoney(money - item.cost);
   }
 
