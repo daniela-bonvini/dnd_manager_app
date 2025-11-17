@@ -2,17 +2,17 @@ import "./Button.css";
 
 function Button({
   buttonLabel,
-  handleOpenModal,
+  handleButtonClick,
   disabled,
   children,
 }: {
   buttonLabel?: string;
-  handleOpenModal: () => void;
+  handleButtonClick: () => void;
   disabled?: boolean;
   children?: React.ReactNode;
 }) {
   return (
-    <button className="btn" onClick={() => handleOpenModal()} type="button" disabled={disabled}>
+    <button className="btn" onClick={() => handleButtonClick()} type="button" disabled={disabled}>
       {children}
       {buttonLabel}
     </button>

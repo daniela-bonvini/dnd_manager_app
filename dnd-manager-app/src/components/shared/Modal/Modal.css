@@ -27,7 +27,7 @@
   position: absolute;
   top: var(--spacing-sm);
   right: var(--spacing-sm);
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
   color: var(--color-text);
   cursor: pointer;
   background: transparent;

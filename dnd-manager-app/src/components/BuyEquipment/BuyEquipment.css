@@ -1,6 +1,6 @@
-.sell-equipment-header {
+.buy-equipment-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 1rem 0;
   position: sticky;

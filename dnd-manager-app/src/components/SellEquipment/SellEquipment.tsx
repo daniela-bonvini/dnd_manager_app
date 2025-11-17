@@ -54,18 +54,19 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   return (
     <>
       <Tooltip text="You don't have any items to sell. Try buying some." show={equipmentInInventory.length <= 0}>
-        <Button buttonLabel={buttonLabel} handleOpenModal={toggleIsModalOpen} disabled={equipmentInInventory.length <= 0}>
+        <Button buttonLabel={buttonLabel} handleButtonClick={toggleIsModalOpen} disabled={equipmentInInventory.length <= 0}>
           <HandCoins />
         </Button>
       </Tooltip>
 
       {isModalOpen && (
         <Modal handleDismiss={toggleIsModalOpen}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-            <h3>Sellable equipment. Current money {money}</h3>
-            <button onClick={toggleSound} title={isSoundEnabled ? "Disable sound" : "Enable sound"}>
+          <div className="sell-equipment-header">
+            <Button buttonLabel={isSoundEnabled ? "Disable sound" : "Enable sound"} handleButtonClick={toggleSound}>
               {isSoundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            </button>
+            </Button>
+            <h3>Sellable equipment</h3>
+            <h3 style={{ marginRight: "0.5rem" }}>Current money: {money}</h3>
           </div>
           {<EquipmentGrid equipmentList={equipmentInInventory} handleButtonClick={handleSellEquipmentClick} />}
         </Modal>
