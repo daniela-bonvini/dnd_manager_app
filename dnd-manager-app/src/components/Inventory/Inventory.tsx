@@ -12,13 +12,7 @@ import SellEquipment from "../SellEquipment/SellEquipment";
 import InventoryList from "../InventoryList/InventoryList";
 import { getAllEquipment } from "../../services/dndApiService";
 import Spinner from "../shared/Spinner/Spinner";
-
-const STORAGE_KEYS = {
-  startingEquipment: "localSavedEquipment",
-  allFetchedEquipment: "localSavedFetchedEquipment",
-  currentInventory: "localCurrentInventory",
-  money: "localSavedMoney",
-};
+import { STORAGE_KEYS } from "../../constants/local-storage-keys";
 
 function Inventory() {
   const [equipment, setEquipment] = React.useState<ExtentedEquipment[]>([]);
