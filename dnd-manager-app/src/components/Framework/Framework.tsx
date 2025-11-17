@@ -5,8 +5,11 @@ import AdventurerStats from "../AdventurerStats/AdventurerStats";
 import Inventory from "../Inventory/Inventory";
 
 function Framework() {
+  const savedMoney = localStorage.getItem("localSavedMoney");
+  const initialMoney = savedMoney ? JSON.parse(savedMoney) : 300;
+
   const [level, setLevel] = React.useState<number>(2);
-  const [money, setMoney] = React.useState<number>(300);
+  const [money, setMoney] = React.useState<number>(initialMoney);
   const [adventurerFinanceState, setAdventurerFinanceState] = React.useState<string>("Wealthy");
 
   return (

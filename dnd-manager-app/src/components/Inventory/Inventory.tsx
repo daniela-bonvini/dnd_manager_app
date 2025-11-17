@@ -13,86 +13,130 @@ import InventoryList from "../InventoryList/InventoryList";
 import { getAllEquipment } from "../../services/dndApiService";
 import Spinner from "../shared/Spinner/Spinner";
 
-//think about moving here  money management too and removing spells and equipment management from framework
+const STORAGE_KEYS = {
+  startingEquipment: "localSavedEquipment",
+  allFetchedEquipment: "localSavedFetchedEquipment",
+  currentInventory: "localCurrentInventory",
+  money: "localSavedMoney",
+};
+
 function Inventory() {
   const [equipment, setEquipment] = React.useState<ExtentedEquipment[]>([]);
   const [filteredEquipment, setFilteredEquipment] = React.useState<ExtentedEquipment[]>([]);
   const [buyableEquipmentList, setBuyableEquipmentList] = React.useState<ExtentedEquipment[]>([]);
+  const [allFetchedEquipment, setAllFetchedEquipment] = React.useState<ExtentedEquipment[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const hasFetchedStartingEquipment = React.useRef(false);
-  const allFetchedEquipmentRef = React.useRef<ExtentedEquipment[]>([]);
 
   const statsContext = useStatsContext();
-  const { money } = statsContext;
+  const { money, setMoney } = statsContext;
+
+  const updateBuyableList = React.useCallback(
+    (currentMoney: number, currentEquipment: ExtentedEquipment[]) => {
+      const affordableEquipment = allFetchedEquipment.filter((item) => item.cost <= currentMoney);
+      const affordableNotOwned = affordableEquipment.filter((item) => !currentEquipment.some((owned) => owned.index === item.index));
+      setBuyableEquipmentList(affordableNotOwned);
+    },
+    [allFetchedEquipment]
+  );
 
   React.useEffect(() => {
     if (hasFetchedStartingEquipment.current) return;
     hasFetchedStartingEquipment.current = true;
 
-    async function loadStartingEquipment() {
+    const loadStartingEquipmentFromStorage = () => {
+      const saved = localStorage.getItem(STORAGE_KEYS.currentInventory);
+      if (saved) {
+        const parsed: ExtentedEquipment[] = JSON.parse(saved);
+        setEquipment(parsed);
+        setFilteredEquipment(parsed);
+        return true;
+      }
+      return false;
+    };
+
+    const fetchAndSaveStartingEquipment = async () => {
       try {
         setIsLoading(true);
         const results = await Promise.all(startingEquipmentIndexList.map((index) => dndApiService.getEquipment(index)));
-        setEquipment(results.filter(Boolean));
-        setFilteredEquipment(results.filter(Boolean));
+        const filtered = results.filter(Boolean);
+        setEquipment(filtered);
+        setFilteredEquipment(filtered);
+        localStorage.setItem(STORAGE_KEYS.currentInventory, JSON.stringify(filtered));
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
-    loadStartingEquipment();
+    if (!loadStartingEquipmentFromStorage()) {
+      fetchAndSaveStartingEquipment();
+    }
   }, []);
 
   React.useEffect(() => {
-    async function fetchAllEquipment() {
+    const loadAllEquipmentFromStorage = () => {
+      const saved = localStorage.getItem(STORAGE_KEYS.allFetchedEquipment);
+      if (saved) {
+        const parsed: ExtentedEquipment[] = JSON.parse(saved);
+        setAllFetchedEquipment(parsed);
+        return true;
+      }
+      return false;
+    };
+
+    const fetchAndSaveAllEquipment = async () => {
       try {
         setIsLoading(true);
         const allEquipment = await getAllEquipment();
-        allFetchedEquipmentRef.current = allEquipment;
-        updateBuyableList(money, equipment);
+        setAllFetchedEquipment(allEquipment);
+        localStorage.setItem(STORAGE_KEYS.allFetchedEquipment, JSON.stringify(allEquipment));
       } catch (error) {
         console.error("Error fetching equipment:", error);
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
-    if (allFetchedEquipmentRef.current.length === 0) {
-      fetchAllEquipment();
-    } else {
-      updateBuyableList(money, equipment);
+    if (!loadAllEquipmentFromStorage()) {
+      fetchAndSaveAllEquipment();
     }
-  }, [equipment, money]);
+  }, []);
+
+  React.useEffect(() => {
+    updateBuyableList(money, equipment);
+  }, [allFetchedEquipment, money, equipment, updateBuyableList]);
 
   function resetFilteredEquipment() {
     setFilteredEquipment(equipment);
-  }
-
-  function updateBuyableList(currentMoney: number, currentEquipment: ExtentedEquipment[]) {
-    const affordableEquipment = allFetchedEquipmentRef.current.filter((item: ExtentedEquipment) => item.cost <= currentMoney);
-    const affordableEquipmentNotInInventory = affordableEquipment.filter(
-      (item) => !currentEquipment.some((ownedItem) => ownedItem.index === item.index)
-    );
-    setBuyableEquipmentList(affordableEquipmentNotInInventory);
   }
 
   function buyEquipment(item: ExtentedEquipment) {
     const updatedEquipment = [item, ...equipment];
     if (money < item.cost) return;
 
+    const newMoney = money - item.cost;
     setEquipment(updatedEquipment);
     setFilteredEquipment(updatedEquipment);
     const listWithoutBoughtItem = buyableEquipmentList.filter((equip) => equip.index !== item.index);
-    const listUpdatedByRemainingMoney = listWithoutBoughtItem.filter((equip) => equip.cost <= money - item.cost);
+    const listUpdatedByRemainingMoney = listWithoutBoughtItem.filter((equip) => equip.cost <= newMoney);
     setBuyableEquipmentList(listUpdatedByRemainingMoney);
-    statsContext.setMoney(money - item.cost);
+    setMoney(newMoney);
+
+    // Save to localStorage
+    localStorage.setItem(STORAGE_KEYS.currentInventory, JSON.stringify(updatedEquipment));
+    localStorage.setItem(STORAGE_KEYS.money, JSON.stringify(newMoney));
   }
 
   function sellEquipment(item: ExtentedEquipment) {
     const updatedEquipmentList = equipment.filter((equip) => equip.index !== item.index);
+    const newMoney = money + item.cost;
     setEquipment(updatedEquipmentList);
     setFilteredEquipment(updatedEquipmentList);
-    statsContext.setMoney(money + item.cost);
+    setMoney(newMoney);
+
+    // Save to localStorage
+    localStorage.setItem(STORAGE_KEYS.currentInventory, JSON.stringify(updatedEquipmentList));
+    localStorage.setItem(STORAGE_KEYS.money, JSON.stringify(newMoney));
   }
 
   return (
