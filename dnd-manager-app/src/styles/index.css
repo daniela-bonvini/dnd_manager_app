@@ -18,6 +18,7 @@
 }
 
 body {
+  background-color: var(--body-background-color);
   margin: 0;
   display: flex;
   place-items: center;
