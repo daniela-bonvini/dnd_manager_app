@@ -40,14 +40,13 @@ As already mentioned, the persistence of state is handled by local storage, and 
 ## Additional features that I didn't have time to implement:
 
 - Select all checkbox to sell all items in inventory
-- Searchbar for items to buy
-- Sell all button to sell all items in inventory at once
+- Searchbar for items to buy/sell
 - Toast notifications when buying/selling items
-- Accessibility implementation and more adaptability to small screens
+- Accessibility implementation
 - Dark theme toggle
 - Pagination in the buy/sell modals
 - Make sound button a shared component to use also in buy equipment
-- Ascendent/descendent ordering in items to buy, choosing by different parameters like name, cost
+- Ascendent/descendent ordering in items to buy, choosing by different parameters like name or cost
 - Tests for components and contexts
 - Different icons for every element, grouping them by macro-categories (eg. consumable items, armor, weapons)
 - A spell section that tracked user's current learned spells and allowed user to serach for new ones to learn filtering them by level or by realm (eg. necromancy, evocation, etc.)

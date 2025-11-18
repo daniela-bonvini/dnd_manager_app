@@ -22,6 +22,7 @@
   box-shadow: var(--shadow-lg);
   border: var(--border-stroke-width-md) solid var(--color-primary);
   background-color: var(--modal-background-color);
+  min-width: 80vw;
 }
 
 .closeBtn {
