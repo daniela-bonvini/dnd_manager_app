@@ -1,15 +1,18 @@
 @import "./variables.css";
 
+@font-face {
+  font-family: "VecnaBold";
+  src: url("/fonts/VecnaBold.ttf") format("truetype");
+  font-weight: bold;
+}
+
 :root {
-  font-family: var(--font-family-base);
+  font-family: "VecnaBold", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #fff var(--app-background-color);
-
-  font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,7 +24,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   background: #f4f1ea;
   line-height: 1.6;
 }
@@ -32,14 +35,12 @@ h1 {
   text-align: center;
   margin: var(--spacing-md) 0;
   letter-spacing: 1px;
-  color: #1a2a33;
 }
 
 h2,
 h3 {
   letter-spacing: 0.5px;
   margin-bottom: var(--spacing-lg);
-  color: #1a2a33;
 }
 
 button {
