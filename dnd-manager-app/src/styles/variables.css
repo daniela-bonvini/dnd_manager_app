@@ -1,19 +1,18 @@
 :root {
   /* Colors */
-  --color-primary: #333;
-  --color-secondary: #555;
-  --color-background: #fff;
+  --color-primary: #2a2a2a;
   --color-text: #000;
   --color-text-light: #fff;
-  --color-border: #ddd;
-  --color-hover: #f0f0f0;
-  --color-disabled: #ccc;
+  --color-hover: #dad1aa;
 
   /* Background Colors */
-  --app-background-color: #242424;
+  --root-background-color: #716751;
+  --frame-background-color: #f1e9d2;
+  --modal-background-color: #f1e9d2;
   --sections-background-color: #f9f9f9;
-  --button-background-color: #e9e3d4;
-  --searchbar-background-color: #e9e3d4;
+  --button-background-color: #e9d9b8;
+  --searchbar-background-color: #e9d9b8;
+  --modal-card-hover-background-color: #fffaf0;
 
   /* Spacing */
   --spacing-xs: 4px;
@@ -54,6 +53,5 @@
 
   /* Z-index */
   --z-index-tooltip: 1;
-  --z-index-modal: 10;
-  --z-index-dropdown: 5;
+  --z-index-modal: 2;
 }

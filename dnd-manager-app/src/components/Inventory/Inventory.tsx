@@ -145,7 +145,7 @@ function Inventory() {
       >
         <div className="inventory-section-wrapper">
           <div className="inventory-header">
-            <PackageOpenIcon />
+            <PackageOpenIcon className="inventory-icon" />
             <h2>Inventory</h2>
           </div>
           {isLoading ? <Spinner /> : <InventoryList equipmentList={filteredEquipment}></InventoryList>}

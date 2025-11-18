@@ -28,7 +28,9 @@ function AdventurerStats() {
         <div className="stats-item">
           <ShieldUser size={20} />
           <label>NAME: </label>
-          <span>{adventurerFinanceState} adventurer</span>
+          <span>
+            <i>{adventurerFinanceState}</i> adventurer
+          </span>
         </div>
         <div className="stats-item">
           <ArrowBigUpDash size={20} />

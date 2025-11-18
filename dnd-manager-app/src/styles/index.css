@@ -11,8 +11,7 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #fff var(--app-background-color);
+  /* color: #5a4d3a; */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -25,7 +24,6 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-size: var(--font-size-xl);
-  background: #f4f1ea;
   line-height: 1.6;
 }
 
@@ -50,13 +48,9 @@ button {
   font-size: var(--font-size-md);
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--button-background-color);
   cursor: pointer;
   transition: border-color var(--transition-fast);
-}
-
-button:hover {
-  border-color: #232553;
 }
 
 button:focus,
@@ -64,13 +58,13 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #dad1aa;
     background-color: #ffffff;
   }
 
   button {
     background-color: var(--sections-background-color);
   }
-}
+} */

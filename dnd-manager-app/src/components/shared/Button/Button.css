@@ -9,8 +9,9 @@
   align-items: center;
   gap: var(--spacing-sm);
   transition: var(--transition-fast);
+  color: var(--color-primary);
 }
 .btn:hover {
-  background: #fffaf0;
+  background: var(--modal-card-hover-background-color);
   transform: translateY(-2px);
 }

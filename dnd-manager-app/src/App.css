@@ -2,5 +2,7 @@
   width: 100vw;
   margin: 2rem;
   padding: 1.3rem;
+  background-color: var(--root-background-color);
   border: var(--border-stroke-width-xl) solid var(--color-primary);
+  color: var(--color-primary);
 }

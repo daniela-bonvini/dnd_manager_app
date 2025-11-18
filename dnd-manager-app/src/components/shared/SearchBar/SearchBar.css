@@ -25,5 +25,6 @@
   border: var(--border-stroke-width-md) solid var(--color-primary);
   border-radius: var(--border-radius-md);
   font-size: inherit;
+  font-family: inherit;
   background-color: var(--searchbar-background-color);
 }
