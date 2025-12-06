@@ -1,6 +1,5 @@
 import React from "react";
 import "./Inventory.css";
-import * as dndApiService from "../../services/dndApiService";
 import SearchBar from "../shared/SearchBar/SearchBar";
 import { PackageOpenIcon } from "lucide-react";
 import { startingEquipmentIndexList } from "../../data/data";
@@ -20,7 +19,6 @@ function Inventory() {
   const [buyableEquipmentList, setBuyableEquipmentList] = React.useState<ExtentedEquipment[]>([]);
   const [allFetchedEquipment, setAllFetchedEquipment] = React.useState<ExtentedEquipment[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const hasFetchedStartingEquipment = React.useRef(false);
 
   const statsContext = useStatsContext();
   const { money, setMoney } = statsContext;
@@ -28,44 +26,13 @@ function Inventory() {
   const updateBuyableList = React.useCallback(
     (currentMoney: number, currentEquipment: ExtentedEquipment[]) => {
       const affordableEquipment = allFetchedEquipment.filter((item) => item.cost <= currentMoney);
-      const affordableNotOwned = affordableEquipment.filter((item) => !currentEquipment.some((owned) => owned.index === item.index));
+      const affordableNotOwned = affordableEquipment.filter(
+        (item) => !currentEquipment.some((owned) => owned.index === item.index)
+      );
       setBuyableEquipmentList(affordableNotOwned);
     },
     [allFetchedEquipment]
   );
-
-  React.useEffect(() => {
-    if (hasFetchedStartingEquipment.current) return;
-    hasFetchedStartingEquipment.current = true;
-
-    const loadStartingEquipmentFromStorage = () => {
-      const saved = localStorage.getItem(STORAGE_KEYS.currentInventory);
-      if (saved) {
-        const parsed: ExtentedEquipment[] = JSON.parse(saved);
-        setEquipment(parsed);
-        setFilteredEquipment(parsed);
-        return true;
-      }
-      return false;
-    };
-
-    const fetchAndSaveStartingEquipment = async () => {
-      try {
-        setIsLoading(true);
-        const results = await Promise.all(startingEquipmentIndexList.map((index) => dndApiService.getEquipment(index)));
-        const filtered = results.filter(Boolean);
-        setEquipment(filtered);
-        setFilteredEquipment(filtered);
-        localStorage.setItem(STORAGE_KEYS.currentInventory, JSON.stringify(filtered));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (!loadStartingEquipmentFromStorage()) {
-      fetchAndSaveStartingEquipment();
-    }
-  }, []);
 
   React.useEffect(() => {
     const loadAllEquipmentFromStorage = () => {
@@ -95,6 +62,30 @@ function Inventory() {
       fetchAndSaveAllEquipment();
     }
   }, []);
+
+  React.useEffect(() => {
+    const loadStartingEquipmentFromStorage = () => {
+      const saved = localStorage.getItem(STORAGE_KEYS.currentInventory);
+      if (saved) {
+        const parsed: ExtentedEquipment[] = JSON.parse(saved);
+        setEquipment(parsed);
+        setFilteredEquipment(parsed);
+        return true;
+      }
+      return false;
+    };
+
+    loadStartingEquipmentFromStorage();
+  }, []);
+
+  React.useEffect(() => {
+    if (allFetchedEquipment.length === 0) return;
+
+    const startingEquipment = allFetchedEquipment.filter((item) => startingEquipmentIndexList.includes(item.index));
+    setEquipment(startingEquipment);
+    setFilteredEquipment(startingEquipment);
+    localStorage.setItem(STORAGE_KEYS.currentInventory, JSON.stringify(startingEquipment));
+  }, [allFetchedEquipment]);
 
   React.useEffect(() => {
     updateBuyableList(money, equipment);
