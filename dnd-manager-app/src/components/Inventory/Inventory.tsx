@@ -11,7 +11,7 @@ import SellEquipment from "../SellEquipment/SellEquipment";
 import InventoryList from "../InventoryList/InventoryList";
 import { getAllEquipment } from "../../services/dndApiService";
 import Spinner from "../shared/Spinner/Spinner";
-import { STORAGE_KEYS } from "../../constants/local-storage-keys";
+import { getAllFetchedEquipment, getCurrentInventory, setCurrentInventory } from "../../services/localStorageService";
 
 function Inventory() {
   const [equipment, setEquipment] = React.useState<ExtentedEquipment[]>([]);
@@ -36,10 +36,9 @@ function Inventory() {
 
   React.useEffect(() => {
     const loadAllEquipmentFromStorage = () => {
-      const saved = localStorage.getItem(STORAGE_KEYS.allFetchedEquipment);
-      if (saved) {
-        const parsed: ExtentedEquipment[] = JSON.parse(saved);
-        setAllFetchedEquipment(parsed);
+      const saved = getAllFetchedEquipment();
+      if (saved.length > 0) {
+        setAllFetchedEquipment(saved);
         return true;
       }
       return false;
@@ -50,7 +49,7 @@ function Inventory() {
         setIsLoading(true);
         const allEquipment = await getAllEquipment();
         setAllFetchedEquipment(allEquipment);
-        localStorage.setItem(STORAGE_KEYS.allFetchedEquipment, JSON.stringify(allEquipment));
+        setAllFetchedEquipment(allEquipment);
       } catch (error) {
         console.error("Error fetching equipment:", error);
       } finally {
@@ -65,11 +64,10 @@ function Inventory() {
 
   React.useEffect(() => {
     const loadStartingEquipmentFromStorage = () => {
-      const saved = localStorage.getItem(STORAGE_KEYS.currentInventory);
-      if (saved) {
-        const parsed: ExtentedEquipment[] = JSON.parse(saved);
-        setEquipment(parsed);
-        setFilteredEquipment(parsed);
+      const saved = getCurrentInventory();
+      if (saved.length > 0) {
+        setEquipment(saved);
+        setFilteredEquipment(saved);
         return true;
       }
       return false;
@@ -84,7 +82,7 @@ function Inventory() {
     const startingEquipment = allFetchedEquipment.filter((item) => startingEquipmentIndexList.includes(item.index));
     setEquipment(startingEquipment);
     setFilteredEquipment(startingEquipment);
-    localStorage.setItem(STORAGE_KEYS.currentInventory, JSON.stringify(startingEquipment));
+    setCurrentInventory(startingEquipment);
   }, [allFetchedEquipment]);
 
   React.useEffect(() => {
@@ -108,8 +106,8 @@ function Inventory() {
     setMoney(newMoney);
 
     // Save to localStorage
-    localStorage.setItem(STORAGE_KEYS.currentInventory, JSON.stringify(updatedEquipment));
-    localStorage.setItem(STORAGE_KEYS.money, JSON.stringify(newMoney));
+    setCurrentInventory(updatedEquipment);
+    setMoney(newMoney);
   }
 
   function sellEquipment(item: ExtentedEquipment) {
@@ -120,8 +118,8 @@ function Inventory() {
     setMoney(newMoney);
 
     // Save to localStorage
-    localStorage.setItem(STORAGE_KEYS.currentInventory, JSON.stringify(updatedEquipmentList));
-    localStorage.setItem(STORAGE_KEYS.money, JSON.stringify(newMoney));
+    setCurrentInventory(updatedEquipmentList);
+    setMoney(newMoney);
   }
 
   return (

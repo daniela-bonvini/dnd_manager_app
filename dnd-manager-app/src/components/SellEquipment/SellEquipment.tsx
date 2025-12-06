@@ -9,12 +9,12 @@ import Button from "../shared/Button/Button";
 import { useStatsContext } from "../../contexts/StatsContext";
 import useToggle from "../../custom-hooks/use-toggle";
 import "./SellEquipment.css";
-import { STORAGE_KEYS } from "../../constants/local-storage-keys";
+import { getSoundEnabled, setSoundEnabled } from "../../services/localStorageService";
 
 function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, toggleIsModalOpen] = useToggle(false);
   const [isSoundEnabled, setIsSoundEnabled] = React.useState(() => {
-    return localStorage.getItem(STORAGE_KEYS.soundEnabled) !== "false";
+    return getSoundEnabled();
   });
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
@@ -35,7 +35,7 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   function toggleSound() {
     const newState = !isSoundEnabled;
     setIsSoundEnabled(newState);
-    localStorage.setItem(STORAGE_KEYS.soundEnabled, String(newState));
+    setSoundEnabled(newState);
   }
 
   async function handleSellEquipmentClick(item: ExtentedEquipment) {
