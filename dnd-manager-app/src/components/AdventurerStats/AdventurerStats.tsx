@@ -1,26 +1,10 @@
 import "./AdventurerStats.css";
 import { ArrowBigUpDash, PiggyBank, ShieldUser } from "lucide-react";
 import { useStatsContext } from "../../contexts/StatsContext";
-import { useEffect } from "react";
 
 function AdventurerStats() {
   const statsContext = useStatsContext();
-  const { adventurerFinanceState, level, money, setAdventurerFinanceState } = statsContext;
-
-  const getFinanceState = (amount: number): string => {
-    if (amount === 0) return "Bankrupt";
-    if (amount < 150) return "Poor";
-    if (amount < 300) return "Struggling";
-    if (amount < 500) return "Wealthy";
-    return "Rich";
-  };
-
-  useEffect(() => {
-    const newState = getFinanceState(money);
-    if (newState !== adventurerFinanceState) {
-      setAdventurerFinanceState(newState);
-    }
-  }, [money, adventurerFinanceState, setAdventurerFinanceState]);
+  const { adventurerFinanceState, level, money } = statsContext;
 
   return (
     <>

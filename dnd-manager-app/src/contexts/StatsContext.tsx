@@ -3,7 +3,6 @@ import React from "react";
 export const StatsContext = React.createContext<
   | {
       adventurerFinanceState: string;
-      setAdventurerFinanceState: (state: string) => void;
       level: number;
       setLevel: (level: number) => void;
       money: number;
