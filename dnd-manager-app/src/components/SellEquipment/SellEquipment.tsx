@@ -1,31 +1,27 @@
-import { HandCoins, Volume2, VolumeX } from "lucide-react";
+import { HandCoins } from "lucide-react";
 import React from "react";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
+import { useSoundContext } from "../../contexts/SoundContext";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
+import { audioService } from "../../services/audioService";
 import Modal from "../shared/Modal/Modal";
 import ModalHeader from "../shared/ModalHeader/ModalHeader";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 import Tooltip from "../shared/Tooltip/Tooltip";
 import Button from "../shared/Button/Button";
+import SoundToggleButton from "../shared/SoundToggleButton/SoundToggleButton";
 import { useStatsContext } from "../../contexts/StatsContext";
 import useToggle from "../../custom-hooks/use-toggle";
 import "./SellEquipment.css";
-import { getSoundEnabled, setSoundEnabled } from "../../services/localStorageService";
 
 function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, toggleIsModalOpen] = useToggle(false);
-  const [isSoundEnabled, setIsSoundEnabled] = React.useState(() => {
-    return getSoundEnabled();
-  });
+  const { isSoundEnabled } = useSoundContext();
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
   React.useEffect(() => {
     if (audioRef.current) return;
-
-    const audio = new Audio("/assets/cash-register-sound.mp3");
-    audio.preload = "auto";
-    audio.volume = 0.1;
-    audioRef.current = audio;
+    audioRef.current = audioService.loadAudio("/assets/cash-register-sound.mp3", 0.1);
   }, []);
 
   const equipmentContext = useEquipmentContext();
@@ -33,23 +29,10 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const statsContext = useStatsContext();
   const { money } = statsContext;
 
-  function toggleSound() {
-    const newState = !isSoundEnabled;
-    setIsSoundEnabled(newState);
-    setSoundEnabled(newState);
-  }
-
   async function handleSellEquipmentClick(item: ExtentedEquipment) {
     sellEquipment(item);
-    if (isSoundEnabled) {
-      playSound();
-    }
-  }
-
-  function playSound() {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch((error: Error) => console.log("Audio play failed:", error));
+    if (isSoundEnabled && audioRef.current) {
+      audioService.play(audioRef.current);
     }
   }
 
@@ -69,9 +52,7 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
             rightContent={
               <>
                 <h3 style={{ marginRight: "0.5rem" }}>Current money: {money}</h3>
-                <Button buttonLabel={isSoundEnabled ? "Disable sound" : "Enable sound"} handleButtonClick={toggleSound}>
-                  {isSoundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
-                </Button>
+                <SoundToggleButton />
               </>
             }
           />

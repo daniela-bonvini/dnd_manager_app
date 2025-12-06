@@ -1,6 +1,7 @@
 import "./Framework.css";
 import React from "react";
 import { StatsContext } from "../../contexts/StatsContext";
+import { SoundProvider } from "../../contexts/SoundContext";
 import AdventurerStats from "../AdventurerStats/AdventurerStats";
 import Inventory from "../Inventory/Inventory";
 import { financialStates, getFinanceState } from "../../constants/financeConfig";
@@ -22,15 +23,17 @@ function Framework() {
 
   return (
     <>
-      <StatsContext.Provider value={{ adventurerFinanceState, level, setLevel, money, setMoney }}>
-        <div className="dnd-frame">
-          <div className="content">
-            <h1>D&D Inventory Manager</h1>
-            <AdventurerStats></AdventurerStats>
-            <Inventory></Inventory>
+      <SoundProvider>
+        <StatsContext.Provider value={{ adventurerFinanceState, level, setLevel, money, setMoney }}>
+          <div className="dnd-frame">
+            <div className="content">
+              <h1>D&D Inventory Manager</h1>
+              <AdventurerStats></AdventurerStats>
+              <Inventory></Inventory>
+            </div>
           </div>
-        </div>
-      </StatsContext.Provider>
+        </StatsContext.Provider>
+      </SoundProvider>
     </>
   );
 }
