@@ -21,10 +21,15 @@ function Framework() {
     }
   }, [money, adventurerFinanceState, setAdventurerFinanceState]);
 
+  const contextValue = React.useMemo(
+    () => ({ adventurerFinanceState, level, setLevel, money, setMoney }),
+    [adventurerFinanceState, level, money]
+  );
+
   return (
     <>
       <SoundProvider>
-        <StatsContext.Provider value={{ adventurerFinanceState, level, setLevel, money, setMoney }}>
+        <StatsContext.Provider value={contextValue}>
           <div className="dnd-frame">
             <div className="content">
               <h1>D&D Inventory Manager</h1>
