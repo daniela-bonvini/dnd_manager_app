@@ -1,5 +1,4 @@
 import React from "react";
-import { X as Close } from "lucide-react";
 import "./Modal.css";
 
 function ModalWrapper({ handleDismiss, children }: { handleDismiss: () => void; children: React.ReactNode }) {
@@ -20,12 +19,7 @@ function ModalWrapper({ handleDismiss, children }: { handleDismiss: () => void; 
   return (
     <div className="wrapper">
       <div className="backdrop" onClick={handleDismiss} />
-      <div className="dialog">
-        <button className="closeBtn" onClick={handleDismiss}>
-          <Close />
-        </button>
-        {children}
-      </div>
+      <div className="dialog">{children}</div>
     </div>
   );
 }

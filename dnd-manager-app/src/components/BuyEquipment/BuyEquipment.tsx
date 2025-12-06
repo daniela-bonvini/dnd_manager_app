@@ -1,5 +1,6 @@
 import { CircleDollarSign } from "lucide-react";
 import Modal from "../shared/Modal/Modal";
+import ModalHeader from "../shared/ModalHeader/ModalHeader";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 import { useStatsContext } from "../../contexts/StatsContext";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
@@ -26,9 +27,7 @@ function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
 
       {isModalOpen && (
         <Modal handleDismiss={toggleIsModalOpen}>
-          <div className="buy-equipment-header">
-            <h3>Available equipment under {money} gold</h3>
-          </div>
+          <ModalHeader title={`Available equipment under ${money} gold`} onClose={toggleIsModalOpen} />
           <EquipmentGrid equipmentList={buyableEquipment || []} handleButtonClick={buyEquipment} />
         </Modal>
       )}

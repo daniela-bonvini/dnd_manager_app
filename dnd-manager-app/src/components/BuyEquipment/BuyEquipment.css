@@ -1,11 +1,1 @@
-.buy-equipment-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0;
-  position: sticky;
-  top: 0;
-  background-color: var(--sections-background-color);
-  border-bottom: var(--border-stroke-width-md) solid var(--color-primary);
-  z-index: 1;
-}
+

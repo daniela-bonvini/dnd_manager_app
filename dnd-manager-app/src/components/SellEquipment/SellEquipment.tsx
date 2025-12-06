@@ -3,6 +3,7 @@ import React from "react";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
 import Modal from "../shared/Modal/Modal";
+import ModalHeader from "../shared/ModalHeader/ModalHeader";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
 import Tooltip from "../shared/Tooltip/Tooltip";
 import Button from "../shared/Button/Button";
@@ -62,13 +63,18 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
 
       {isModalOpen && (
         <Modal handleDismiss={toggleIsModalOpen}>
-          <div className="sell-equipment-header">
-            <Button buttonLabel={isSoundEnabled ? "Disable sound" : "Enable sound"} handleButtonClick={toggleSound}>
-              {isSoundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            </Button>
-            <h3>Sellable equipment</h3>
-            <h3 style={{ marginRight: "0.5rem" }}>Current money: {money}</h3>
-          </div>
+          <ModalHeader
+            title="Sellable equipment"
+            onClose={toggleIsModalOpen}
+            rightContent={
+              <>
+                <h3 style={{ marginRight: "0.5rem" }}>Current money: {money}</h3>
+                <Button buttonLabel={isSoundEnabled ? "Disable sound" : "Enable sound"} handleButtonClick={toggleSound}>
+                  {isSoundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
+                </Button>
+              </>
+            }
+          />
           {<EquipmentGrid equipmentList={equipmentInInventory} handleButtonClick={handleSellEquipmentClick} />}
         </Modal>
       )}
