@@ -11,7 +11,20 @@
   transition: var(--transition-fast);
   color: var(--color-primary);
 }
+
 .btn:hover {
   background: var(--modal-card-hover-background-color);
   transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--button-background-color);
+  transform: none;
+}
+
+.btn:disabled:hover {
+  background: var(--button-background-color);
+  transform: none;
 }
