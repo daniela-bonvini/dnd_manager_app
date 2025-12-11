@@ -1,5 +1,5 @@
 import { Delete, Search } from "lucide-react";
-import React from "react";
+import { useState, useEffect } from "react";
 import "./SearchBar.css";
 import Button from "../Button/Button";
 
@@ -14,17 +14,25 @@ function SearchBar<T extends { name: string }>({
   setFilteredList: React.Dispatch<React.SetStateAction<T[]>>;
   resetFilteredList: () => void;
 }) {
-  const [query, setQuery] = React.useState<string>("");
+  const [query, setQuery] = useState<string>("");
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
-    const searchedElement = event.target.value.toLowerCase();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!query.trim()) {
+        resetFilteredList();
+        return;
+      }
+
+      const searchLowerCase = query.toLowerCase();
+      const foundResults = listToSearch.filter((item) => item.name.toLowerCase().includes(searchLowerCase));
+      setFilteredList(foundResults);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query, listToSearch, setFilteredList, resetFilteredList]);
+
+  function handleSearchInput(event: React.ChangeEvent<HTMLInputElement>) {
     setQuery(event.target.value);
-    if (!searchedElement) {
-      resetFilteredList();
-      return;
-    }
-    const foundResults = listToSearch.filter((item) => item.name.toLowerCase().includes(searchedElement));
-    setFilteredList(foundResults);
   }
 
   function handleReset() {
@@ -36,7 +44,14 @@ function SearchBar<T extends { name: string }>({
     <div className="searchbar-input-container">
       <span className="searchbar-input-wrapper">
         <Search width={20} height={20} color="black" />
-        <input className="searchbar-input" id="search-input" type="text" value={query} onChange={handleSearch} placeholder={placeholder} />
+        <input
+          className="searchbar-input"
+          id="search-input"
+          type="text"
+          value={query}
+          onChange={handleSearchInput}
+          placeholder={placeholder}
+        />
       </span>
       <Button buttonLabel="RESET" handleButtonClick={handleReset}>
         <Delete />

@@ -1,5 +1,5 @@
 import { HandCoins } from "lucide-react";
-import React from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useEquipmentContext } from "../../contexts/EquipmentContext";
 import { useSoundContext } from "../../contexts/SoundContext";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
@@ -17,9 +17,9 @@ import "./SellEquipment.css";
 function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, toggleIsModalOpen] = useToggle(false);
   const { isSoundEnabled } = useSoundContext();
-  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (audioRef.current) return;
     audioRef.current = audioService.loadAudio("/assets/cash-register-sound.mp3", 0.1);
   }, []);
@@ -29,12 +29,15 @@ function SellEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const statsContext = useStatsContext();
   const { money } = statsContext;
 
-  async function handleSellEquipmentClick(item: ExtentedEquipment) {
-    sellEquipment(item);
-    if (isSoundEnabled && audioRef.current) {
-      audioService.play(audioRef.current);
-    }
-  }
+  const handleSellEquipmentClick = useCallback(
+    (item: ExtentedEquipment) => {
+      sellEquipment(item);
+      if (isSoundEnabled && audioRef.current) {
+        audioService.play(audioRef.current);
+      }
+    },
+    [sellEquipment, isSoundEnabled]
+  );
 
   return (
     <>

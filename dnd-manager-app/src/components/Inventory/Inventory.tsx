@@ -114,6 +114,16 @@ function Inventory() {
     setMoney(newMoney);
   }
 
+  const contextValue = React.useMemo(
+    () => ({
+      buyEquipment,
+      sellEquipment,
+      equipmentInInventory: equipment,
+      buyableEquipment: buyableEquipmentList,
+    }),
+    [equipment, buyableEquipmentList]
+  );
+
   function sellEquipment(item: ExtentedEquipment) {
     const updatedEquipmentList = equipment.filter((equip) => equip.index !== item.index);
     const newMoney = money + item.cost;
@@ -127,14 +137,7 @@ function Inventory() {
 
   return (
     <>
-      <EquipmentContext.Provider
-        value={{
-          buyEquipment: buyEquipment,
-          sellEquipment: sellEquipment,
-          equipmentInInventory: equipment,
-          buyableEquipment: buyableEquipmentList,
-        }}
-      >
+      <EquipmentContext.Provider value={contextValue}>
         <div className="inventory-section-wrapper">
           <div className="inventory-header">
             <PackageOpenIcon className="inventory-icon" />

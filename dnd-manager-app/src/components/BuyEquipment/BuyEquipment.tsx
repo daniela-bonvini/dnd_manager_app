@@ -1,5 +1,5 @@
 import { CircleDollarSign } from "lucide-react";
-import React from "react";
+import { useCallback, useEffect, useRef } from "react";
 import Modal from "../shared/Modal/Modal";
 import ModalHeader from "../shared/ModalHeader/ModalHeader";
 import EquipmentGrid from "../EquipmentGrid/EquipmentGrid";
@@ -17,9 +17,9 @@ import type { ExtentedEquipment } from "../../models/EquipmentModel";
 function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, toggleIsModalOpen] = useToggle(false);
   const { isSoundEnabled } = useSoundContext();
-  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (audioRef.current) return;
     audioRef.current = audioService.loadAudio("/assets/cash-register-sound.mp3", 0.1);
   }, []);
@@ -29,12 +29,15 @@ function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const equipmentContext = useEquipmentContext();
   const { buyEquipment, buyableEquipment } = equipmentContext;
 
-  function handleBuyEquipment(item: ExtentedEquipment) {
-    buyEquipment(item);
-    if (isSoundEnabled && audioRef.current) {
-      audioService.play(audioRef.current);
-    }
-  }
+  const handleBuyEquipment = useCallback(
+    (item: ExtentedEquipment) => {
+      buyEquipment(item);
+      if (isSoundEnabled && audioRef.current) {
+        audioService.play(audioRef.current);
+      }
+    },
+    [buyEquipment, isSoundEnabled]
+  );
 
   return (
     <>
