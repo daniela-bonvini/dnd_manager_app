@@ -2,6 +2,7 @@ import { Delete, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import "./SearchBar.css";
 import Button from "../Button/Button";
+import { SEARCH_DEBOUNCE_MS } from "../../../constants/searchConfig";
 
 function SearchBar<T extends { name: string }>({
   placeholder,
@@ -26,7 +27,7 @@ function SearchBar<T extends { name: string }>({
       const searchLowerCase = query.toLowerCase();
       const foundResults = listToSearch.filter((item) => item.name.toLowerCase().includes(searchLowerCase));
       setFilteredList(foundResults);
-    }, 300);
+    }, SEARCH_DEBOUNCE_MS);
 
     return () => clearTimeout(timer);
   }, [query, listToSearch, setFilteredList, resetFilteredList]);

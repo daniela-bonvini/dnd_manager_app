@@ -1,5 +1,5 @@
 import "./Framework.css";
-import React from "react";
+import { useState, useEffect, useMemo } from "react";
 import { StatsContext } from "../../contexts/StatsContext";
 import { SoundProvider } from "../../contexts/SoundContext";
 import AdventurerStats from "../AdventurerStats/AdventurerStats";
@@ -10,36 +10,34 @@ import { getMoney } from "../../services/localStorageService";
 function Framework() {
   const initialMoney = getMoney();
 
-  const [level, setLevel] = React.useState<number>(2);
-  const [money, setMoney] = React.useState<number>(initialMoney);
-  const [adventurerFinanceState, setAdventurerFinanceState] = React.useState<string>(financialStates.Struggling);
+  const [level, setLevel] = useState<number>(2);
+  const [money, setMoney] = useState<number>(initialMoney);
+  const [adventurerFinanceState, setAdventurerFinanceState] = useState<string>(financialStates.Struggling);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const newState = getFinanceState(money);
     if (newState !== adventurerFinanceState) {
       setAdventurerFinanceState(newState);
     }
-  }, [money, adventurerFinanceState, setAdventurerFinanceState]);
+  }, [money, adventurerFinanceState]);
 
-  const contextValue = React.useMemo(
+  const contextValue = useMemo(
     () => ({ adventurerFinanceState, level, setLevel, money, setMoney }),
     [adventurerFinanceState, level, money]
   );
 
   return (
-    <>
-      <SoundProvider>
-        <StatsContext.Provider value={contextValue}>
-          <div className="dnd-frame">
-            <div className="content">
-              <h1>D&D Inventory Manager</h1>
-              <AdventurerStats></AdventurerStats>
-              <Inventory></Inventory>
-            </div>
+    <SoundProvider>
+      <StatsContext.Provider value={contextValue}>
+        <div className="dnd-frame">
+          <div className="content">
+            <h1>D&D Inventory Manager</h1>
+            <AdventurerStats />
+            <Inventory />
           </div>
-        </StatsContext.Provider>
-      </SoundProvider>
-    </>
+        </div>
+      </StatsContext.Provider>
+    </SoundProvider>
   );
 }
 

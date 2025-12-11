@@ -94,6 +94,30 @@ describe("LocalStorageService", () => {
       setAllFetchedEquipment(newEquipment);
       expect(getAllFetchedEquipment()).toEqual(newEquipment);
     });
+
+    it("should invalidate cache after 24 hours", () => {
+      const equipment: ExtentedEquipment[] = [{ index: "armor", name: "Armor", url: "/armor", cost: 200 }];
+      setAllFetchedEquipment(equipment);
+      expect(getAllFetchedEquipment()).toEqual(equipment);
+
+      // Simulate cache expiration by setting old timestamp
+      const oldTimestamp = Date.now() - 25 * 60 * 60 * 1000; // 25 hours ago
+      localStorage.setItem("lastEquipmentFetch", String(oldTimestamp));
+
+      // Should return empty array because cache is expired
+      expect(getAllFetchedEquipment()).toEqual([]);
+    });
+
+    it("should store cache timestamp when saving equipment", () => {
+      const equipment: ExtentedEquipment[] = [{ index: "armor", name: "Armor", url: "/armor", cost: 200 }];
+      const beforeTime = Date.now();
+      setAllFetchedEquipment(equipment);
+      const afterTime = Date.now();
+
+      const storedTimestamp = parseInt(localStorage.getItem("lastEquipmentFetch") || "0");
+      expect(storedTimestamp).toBeGreaterThanOrEqual(beforeTime);
+      expect(storedTimestamp).toBeLessThanOrEqual(afterTime);
+    });
   });
 
   describe("getSoundEnabled / setSoundEnabled", () => {

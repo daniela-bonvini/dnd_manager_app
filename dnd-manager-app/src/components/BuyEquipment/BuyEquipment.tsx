@@ -13,6 +13,7 @@ import useToggle from "../../custom-hooks/use-toggle";
 import "./BuyEquipment.css";
 import SoundToggleButton from "../shared/SoundToggleButton/SoundToggleButton";
 import type { ExtentedEquipment } from "../../models/EquipmentModel";
+import { AUDIO_PATHS, AUDIO_VOLUMES } from "../../constants/audioConfig";
 
 function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
   const [isModalOpen, toggleIsModalOpen] = useToggle(false);
@@ -21,7 +22,7 @@ function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
 
   useEffect(() => {
     if (audioRef.current) return;
-    audioRef.current = audioService.loadAudio("/assets/cash-register-sound.mp3", 0.1);
+    audioRef.current = audioService.loadAudio(AUDIO_PATHS.CASH_REGISTER, AUDIO_VOLUMES.CASH_REGISTER);
   }, []);
 
   const statsContext = useStatsContext();
