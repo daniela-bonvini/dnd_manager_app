@@ -11,7 +11,12 @@ import SellEquipment from "../SellEquipment/SellEquipment";
 import InventoryList from "../InventoryList/InventoryList";
 import { getAllEquipment } from "../../services/dndApiService";
 import Spinner from "../shared/Spinner/Spinner";
-import { getAllFetchedEquipment, getCurrentInventory, setCurrentInventory } from "../../services/localStorageService";
+import {
+  getAllFetchedEquipment,
+  getCurrentInventory,
+  setCurrentInventory,
+  setAllFetchedEquipment as saveAllFetchedEquipment,
+} from "../../services/localStorageService";
 
 function Inventory() {
   const [equipment, setEquipment] = React.useState<ExtentedEquipment[]>([]);
@@ -49,7 +54,7 @@ function Inventory() {
         setIsLoading(true);
         const allEquipment = await getAllEquipment();
         setAllFetchedEquipment(allEquipment);
-        setAllFetchedEquipment(allEquipment);
+        saveAllFetchedEquipment(allEquipment);
       } catch (error) {
         console.error("Error fetching equipment:", error);
       } finally {
@@ -103,7 +108,6 @@ function Inventory() {
     const listWithoutBoughtItem = buyableEquipmentList.filter((equip) => equip.index !== item.index);
     const listUpdatedByRemainingMoney = listWithoutBoughtItem.filter((equip) => equip.cost <= newMoney);
     setBuyableEquipmentList(listUpdatedByRemainingMoney);
-    setMoney(newMoney);
 
     // Save to localStorage
     setCurrentInventory(updatedEquipment);
@@ -115,7 +119,6 @@ function Inventory() {
     const newMoney = money + item.cost;
     setEquipment(updatedEquipmentList);
     setFilteredEquipment(updatedEquipmentList);
-    setMoney(newMoney);
 
     // Save to localStorage
     setCurrentInventory(updatedEquipmentList);
