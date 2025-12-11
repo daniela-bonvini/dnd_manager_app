@@ -40,10 +40,16 @@ function BuyEquipment({ buttonLabel }: { buttonLabel?: string }) {
     [buyEquipment, isSoundEnabled]
   );
 
+  const isDisabled = money <= 0 || !buyableEquipment || buyableEquipment.length === 0;
+  const tooltipText =
+    money === 0
+      ? "You don't have any money. Try selling some items."
+      : "All items are either too expensive or already owned.";
+
   return (
     <>
-      <Tooltip text="You don't have enough money. Try selling some items." show={money === 0}>
-        <Button buttonLabel={buttonLabel} handleButtonClick={toggleIsModalOpen} disabled={money <= 0}>
+      <Tooltip text={tooltipText} show={isDisabled}>
+        <Button buttonLabel={buttonLabel} handleButtonClick={toggleIsModalOpen} disabled={isDisabled}>
           <CircleDollarSign />
         </Button>
       </Tooltip>
