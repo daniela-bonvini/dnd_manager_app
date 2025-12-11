@@ -23,7 +23,7 @@ function Framework() {
 
   const contextValue = useMemo(
     () => ({ adventurerFinanceState, level, setLevel, money, setMoney }),
-    [adventurerFinanceState, level, money]
+    [adventurerFinanceState, level, money, setMoney]
   );
 
   return (
