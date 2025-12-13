@@ -10,6 +10,8 @@
   justify-content: space-between;
   padding: var(--spacing-sm) var(--spacing-md);
   margin-top: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .searchbar-input-wrapper {
@@ -19,6 +21,7 @@
   gap: var(--spacing-xs);
   justify-content: flex-start;
   background-color: var(--sections-background-color);
+  min-width: 0;
 }
 
 .searchbar-input {
@@ -27,4 +30,13 @@
   font-size: inherit;
   font-family: inherit;
   background-color: var(--searchbar-background-color);
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--spacing-sm);
 }
+
+@media (max-width: 480px) {
+  .searchbar-input-container {
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+  }

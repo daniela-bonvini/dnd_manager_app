@@ -3,6 +3,8 @@
   grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
   gap: var(--spacing-lg);
   margin-top: var(--spacing-lg);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .equipment-card {
@@ -21,3 +23,13 @@
   transform: translateY(-2px);
   background-color: var(--color-hover);
 }
+
+@media (max-width: 480px) {
+  .equipment-grid {
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .equipment-card {
+    padding: var(--spacing-md);
+  }

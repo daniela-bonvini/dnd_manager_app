@@ -1,6 +1,8 @@
 .inventory-section-wrapper {
   margin: var(--spacing-md) auto;
   max-width: 800px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .inventory-header {
@@ -18,8 +20,29 @@
   display: flex;
   gap: var(--spacing-lg);
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .inventory-icon {
   padding-top: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .inventory-section-wrapper {
+    margin: var(--spacing-sm) auto;
+  }
+
+  .inventory-header {
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .inventory-buttons {
+    gap: var(--spacing-md);
+  }
+
+  .inventory-icon {
+    width: 18px;
+    height: 18px;
+  }
 }

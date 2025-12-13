@@ -23,7 +23,21 @@
   border: var(--border-stroke-width-md) solid var(--color-primary);
   background-color: var(--modal-background-color);
   min-width: 80vw;
+  max-height: 90vh;
 }
+
+@media (max-width: 768px) {
+  .dialog {
+    min-width: 90vw;
+    padding: var(--spacing-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .dialog {
+    min-width: calc(100vw - 2rem);
+    padding: var(--spacing-lg);
+  }
 
 .closeBtn {
   position: absolute;

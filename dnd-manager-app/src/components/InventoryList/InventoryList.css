@@ -6,6 +6,8 @@
   box-shadow: var(--shadow-sm);
   height: 400px;
   overflow: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .inventory-list {
@@ -29,3 +31,9 @@
   border-bottom: 1px dotted #666;
   padding: var(--spacing-md) 0;
 }
+
+@media (max-width: 480px) {
+  .inventory-list-wrapper {
+    height: 300px;
+    padding: var(--spacing-lg) var(--spacing-md);
+  }

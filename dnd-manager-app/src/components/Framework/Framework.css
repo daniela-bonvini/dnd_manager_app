@@ -1,5 +1,5 @@
 :root {
-  --topDistance: 27px;
+  --topDistance: 15px;
 }
 
 @keyframes logo-spin {
@@ -30,6 +30,14 @@
     background-image: url("../../assets/d20.svg");
     background-size: contain;
     background-repeat: no-repeat;
+  }
+}
+
+/* Hide decorative d20s on mobile */
+@media (max-width: 768px) {
+  .dnd-frame::before,
+  .dnd-frame::after {
+    display: none;
   }
 }
 
